@@ -12,7 +12,7 @@ else
   echo "Generating cert for Vault"
 fi
 
-$BOSH_CMD -n -d $VAULT_CMD deploy $__BASEDIR__/vault/vault.yml \
+bosh -n -d vault deploy $__BASEDIR__/vault/vault.yml \
   -v VAULT_AZ_NAME="$VAULT_AZ_NAME" \
   -v VAULT_NW_NAME="$VAULT_NW_NAME" \
   -v STATIC_IPS="$VAULT_STATIC_IPS" \
@@ -34,7 +34,7 @@ set -e
 if [ $IS_VAULT_INTIALIZED -eq 501 ]; then
   echo "Initalizing Vault"
 
-  VAULT_INIT_RESPONSE=$($VAULT_CMD init)
+  VAULT_INIT_RESPONSE=$(vault init)
 
   rm -rf $__BASEDIR__/$BOSH_ALIAS/vault.log
 
@@ -67,22 +67,22 @@ fi
 # Create a token with the specified policy
 
 ## Approle based authentication ###
-# $VAULT_CMD auth-enable approle
-# $VAULT_CMD write auth/approle/role/$ROLE_NAME policies=$VAULT_POLICY_NAME -period="87600h"
-# export ROLE_ID=$($VAULT_CMD read -format=json auth/approle/role/$ROLE_NAME/role-id | $JQ_CMD .data.role_id | tr -d '"')
-# export SECRET_ID=$($VAULT_CMD write -format=json -f auth/approle/role/$ROLE_NAME/secret-id | $JQ_CMD .data.secret_id | tr -d '"')
-# export CLIENT_TOKEN=$($VAULT_CMD write -format=json auth/approle/login role_id=$ROLE_ID secret_id=$SECRET_ID | $JQ_CMD .auth.client_token | tr -d '"')
+# vault auth-enable approle
+# vault write auth/approle/role/$ROLE_NAME policies=$VAULT_POLICY_NAME -period="87600h"
+# export ROLE_ID=$(vault read -format=json auth/approle/role/$ROLE_NAME/role-id | jq .data.role_id | tr -d '"')
+# export SECRET_ID=$(vault write -format=json -f auth/approle/role/$ROLE_NAME/secret-id | jq .data.secret_id | tr -d '"')
+# export CLIENT_TOKEN=$(vault write -format=json auth/approle/login role_id=$ROLE_ID secret_id=$SECRET_ID | jq .auth.client_token | tr -d '"')
 
 #### VAULT CONFIGURATION END #####
 
 if [[ ! -e $__BASEDIR__/$BOSH_ALIAS/create_token_response.json ]]; then
   export VAULT_TOKEN=$(cat $__BASEDIR__/$BOSH_ALIAS/vault.log | grep 'Initial Root Token' | awk '{print $4}')
   # Create a mount for concourse
-  $VAULT_CMD secrets enable -path=$CONCOURSE_VAULT_MOUNT -description="Secrets for use by concourse pipelines" generic
+  vault secrets enable -path=$CONCOURSE_VAULT_MOUNT -description="Secrets for use by concourse pipelines" generic
 
   # Create application policy
-  $VAULT_CMD policy write $VAULT_POLICY_NAME $__BASEDIR__/vault/vault-policy.hcl
-  CREATE_TOKEN_RESPONSE=$($VAULT_CMD token create --policy=$VAULT_POLICY_NAME -period="87600h" -format=json)
+  vault policy write $VAULT_POLICY_NAME $__BASEDIR__/vault/vault-policy.hcl
+  CREATE_TOKEN_RESPONSE=$(vault token create --policy=$VAULT_POLICY_NAME -period="87600h" -format=json)
   rm -rf $__BASEDIR__/$BOSH_ALIAS/create_token_response.json
   echo $CREATE_TOKEN_RESPONSE > $__BASEDIR__/$BOSH_ALIAS/create_token_response.json
 fi

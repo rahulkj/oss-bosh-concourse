@@ -16,8 +16,8 @@ credhub login
 
 echo "Connected to director credhub..."
 
-CREDHUB_CONCOURSE_CA=$(credhub get -n /$BOSH_ALIAS/concourse/atc_tls -j | $JQ_CMD -r '.value.certificate')
-CREDHUB_CONCOURSE_SECRET=$(credhub get -n /$BOSH_ALIAS/concourse/concourse_to_credhub_client_secret -j | $JQ_CMD -r '.value')
+CREDHUB_CONCOURSE_CA=$(credhub get -n /$BOSH_ALIAS/concourse/atc_tls -j | jq -r '.value.certificate')
+CREDHUB_CONCOURSE_SECRET=$(credhub get -n /$BOSH_ALIAS/concourse/concourse_to_credhub_client_secret -j | jq -r '.value')
 
 export CREDHUB_CLIENT=concourse_to_credhub_client
 export CREDHUB_SECRET=$CREDHUB_CONCOURSE_SECRET

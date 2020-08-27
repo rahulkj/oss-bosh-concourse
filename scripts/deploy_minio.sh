@@ -18,7 +18,7 @@ export MINIO_RELEASE_URL=$release_url
 
 uploadRelease "minio" $MINIO_RELEASE_VERSION $MINIO_RELEASE_URL
 
-$BOSH_CMD -n deploy \
+bosh -n deploy \
   $__BASEDIR__/minio.yml -d minio \
   --vars-store=$__BASEDIR__/$BOSH_ALIAS/minio-vars.yml \
   -v minio_deployment_name="minio" \
@@ -31,4 +31,4 @@ $BOSH_CMD -n deploy \
   -v minio_disk_type="$MINIO_DISK_TYPE"
 
 ##### CONCOURSE DEPLOYMENT END #####
-$BOSH_CMD clean-up --all -n
+bosh clean-up --all -n

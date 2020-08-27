@@ -8,4 +8,4 @@ source "$__DIR__"/load-env.sh
 source "$__DIR__"/releases
 source "$__DIR__"/bosh-login
 
-$BOSH_CMD -d minio run-errand bucket-seeding
+bosh -d minio run-errand bucket-seeding

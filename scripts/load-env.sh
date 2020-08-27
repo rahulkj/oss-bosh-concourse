@@ -12,11 +12,6 @@
 FILE_PATH=$(cd -P -- "$(dirname -- "$0")" && printf '%s\n' "$(pwd -P)/$(basename -- "$0")")
 __DIR__="$( cd "$( dirname "${FILE_PATH}" )" && pwd )"
 
-export BOSH_CMD=bosh
-export VAULT_CMD=vault
-export JQ_CMD=jq
-export CREDHUB_CMD=credhub
-
 if [[ "$ENV" != "" ]]; then
   echo "sourcing $__DIR__/$ENV-env...."
   source "$__DIR__"/$ENV-env
@@ -27,7 +22,7 @@ fi
 
 UNAME=$(uname)
 if [[ "$UNAME" == "Darwin" && "$OVERWRITE_MAC_DNS_SERVERS" == "true" ]]; then
-  DNS_SERVERS_LIST=( $(echo "$DNS_SERVERS" | $JQ_CMD -r '.[]') )
+  DNS_SERVERS_LIST=( $(echo "$DNS_SERVERS" | jq -r '.[]') )
   networksetup -setdnsservers Wi-Fi $DNS_SERVERS_LIST
 fi
 
@@ -48,19 +43,19 @@ function unsetDnsOnWifiAdapter() {
 }
 
 function updateCloudConfig() {
-  $BOSH_CMD -n update-cloud-config $__BASEDIR__/cloud-configs/cloud-config.yml \
+  bosh -n update-cloud-config $__BASEDIR__/cloud-configs/cloud-config.yml \
     -l $__BASEDIR__/cloud-config-vars.yml
 }
 
 function uploadRelease() {
-  UPLOADED_RELEASES=$($BOSH_CMD releases --json)
+  UPLOADED_RELEASES=$(bosh releases --json)
 
-  RELEASES_EXISTS=$(echo $UPLOADED_RELEASES | $JQ_CMD --arg release_name $1 \
+  RELEASES_EXISTS=$(echo $UPLOADED_RELEASES | jq --arg release_name $1 \
     --arg release_version $2 \
     '.Tables[] | .Rows[] | select(.name | contains($release_name)) | select(.version | contains($release_version))')
 
   if [[ -z "$RELEASES_EXISTS" ]]; then
-    $BOSH_CMD -n upload-release $3
+    bosh -n upload-release $3
   else
     echo "Latest release is already deployed, so skipping uploading release: $1 with the version: $2"
   fi

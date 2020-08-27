@@ -16,7 +16,7 @@ source $__BASEDIR__/scripts/bosh-login
 createCloudConfigVarsFile
 updateCloudConfig
 
-# $BOSH_CMD -n update-config --name concourse --type cloud $__BASEDIR__/cloud-configs/vm-extenions-config.yml -v ns_group_name="${CONCOURSE_NS_GROUP_NAME}"
+# bosh -n update-config --name concourse --type cloud $__BASEDIR__/cloud-configs/vm-extenions-config.yml -v ns_group_name="${CONCOURSE_NS_GROUP_NAME}"
 
 ## Check to see if the concourse-bosh-deployment folder exists, if not then clone it, else pull the latest code
 if [ ! -d "$__BASEDIR__/concourse-bosh-deployment" ]; then
@@ -42,7 +42,7 @@ if [[ ! -f "$__BASEDIR__/bosh-stemcell-$SC_VERSION-vsphere-esxi-ubuntu-$LINUX_RE
 fi
 
 ## Upload the stemcell to bosh director
-$BOSH_CMD -n upload-stemcell $__BASEDIR__/bosh-stemcell-$SC_VERSION-vsphere-esxi-ubuntu-$LINUX_RELEASE-go_agent.tgz
+bosh -n upload-stemcell $__BASEDIR__/bosh-stemcell-$SC_VERSION-vsphere-esxi-ubuntu-$LINUX_RELEASE-go_agent.tgz
 
 ## If $LATEST_RELEASES is true, then deploy all the latest releases for concourse, garden-runc, postgres, backup-and-restore-sdk. Else use the releases defined in the concourse-bosh-deployment/versions.yml
 if [[ "$LATEST_RELEASES" == "false" ]]; then
@@ -83,7 +83,7 @@ fi
 createConcourseDeploymentVarsFile
 
 #### CONCOURSE DEPLOYMENT START #####
-$BOSH_CMD -n deploy $__BASEDIR__/concourse-bosh-deployment/cluster/concourse.yml \
+bosh -n deploy $__BASEDIR__/concourse-bosh-deployment/cluster/concourse.yml \
   -d concourse \
   $CONCOURSE_VERSIONS_TO_DEPLOY \
   -o $__BASEDIR__/ops-files/nws-azs.yml \
@@ -112,7 +112,7 @@ $BOSH_CMD -n deploy $__BASEDIR__/concourse-bosh-deployment/cluster/concourse.yml
 ##### CONCOURSE DEPLOYMENT END #####
 
 ## cleanup bosh director and remove the unused releases and stemcells
-$BOSH_CMD clean-up --all -n
+bosh clean-up --all -n
 
 rm -rf $__BASEDIR__/$CLOUD_CONFIG_VAR_FILE
 rm -rf $__BASEDIR__/$CONCOURSE_VAR_FILE

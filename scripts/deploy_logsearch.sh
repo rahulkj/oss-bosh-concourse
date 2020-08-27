@@ -8,10 +8,10 @@ source "$__DIR__"/load-env.sh
 source "$__DIR__"/releases
 source "$__DIR__"/bosh-login
 
-$BOSH_CMD upload-release --sha1 6da3a6f4f33ada63ecef9ae39c2739f3af60d760 \
+bosh upload-release --sha1 6da3a6f4f33ada63ecef9ae39c2739f3af60d760 \
   https://bosh.io/d/github.com/cloudfoundry-community/logsearch-boshrelease?v=210.0.0
 
-$BOSH_CMD upload-release --sha1 c69ad70cf778cb70a92e51606be9be94d656521e \
+bosh upload-release --sha1 c69ad70cf778cb70a92e51606be9be94d656521e \
   https://bosh.io/d/github.com/cloudfoundry-community/logsearch-for-cloudfoundry?v=210.0.0
 
 git clone https://github.com/cloudfoundry-community/logsearch-boshrelease $__BASEDIR__/logsearch-boshrelease
@@ -20,7 +20,7 @@ pushd $__BASEDIR__/logsearch-boshrelease/deployment
 
 # rm -rf logsearch.yml
 
-$BOSH_CMD int logsearch-deployment.yml \
+bosh int logsearch-deployment.yml \
   -o operations/scale-to-one-az.yml \
   -o operations/change-azs.yml \
   -o operations/rename-network.yml \
@@ -49,7 +49,7 @@ $BOSH_CMD int logsearch-deployment.yml \
   -v system_domain="sys.homelab.io"
   -o overrides.yml  > logsearch.yml
 
-$BOSH_CMD -d logsearch deploy -n logsearch-deployment.yml \
+bosh -d logsearch deploy -n logsearch-deployment.yml \
   -o operations/scale-to-one-az.yml \
   -o operations/change-azs.yml \
   -o operations/rename-network.yml \

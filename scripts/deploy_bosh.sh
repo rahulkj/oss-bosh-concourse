@@ -46,7 +46,7 @@ if [[ "$LATEST_RELEASES" == "true" ]]; then
 fi
 
 if [[ "${DEBUG}" == "true" ]]; then
-  $BOSH_CMD int $__BASEDIR__/bosh-deployment/bosh.yml \
+  bosh int $__BASEDIR__/bosh-deployment/bosh.yml \
     --vars-store=$__BASEDIR__/$BOSH_ALIAS/bosh-vars.yml \
     -o $__BASEDIR__/bosh-deployment/vsphere/cpi.yml \
     -o $__BASEDIR__/bosh-deployment/vsphere/resource-pool.yml \
@@ -63,7 +63,7 @@ if [[ "${DEBUG}" == "true" ]]; then
 fi
 
 ## Deploy bosh director and enable jumpbox user, backups, uaa and credhub
-$BOSH_CMD create-env $__BASEDIR__/bosh-deployment/bosh.yml \
+bosh create-env $__BASEDIR__/bosh-deployment/bosh.yml \
   --state=$__BASEDIR__/$BOSH_ALIAS/state.json \
   --vars-store=$__BASEDIR__/$BOSH_ALIAS/bosh-vars.yml \
   -o $__BASEDIR__/bosh-deployment/vsphere/cpi.yml \
@@ -86,6 +86,6 @@ rm -rf $__BASEDIR__/$BOSH_VAR_FILE
 ## Login to bosh director for all the operations that are going to be performed later
 source $__BASEDIR__/scripts/bosh-login
 
-$BOSH_CMD -n update-runtime-config $__BASEDIR__/bosh-deployment/runtime-configs/dns.yml
+bosh -n update-runtime-config $__BASEDIR__/bosh-deployment/runtime-configs/dns.yml
 
 unsetDnsOnWifiAdapter

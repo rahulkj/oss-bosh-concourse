@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash
 
 if [ -z "$__BASEDIR__" ]; then
   FILE_PATH=$(cd -P -- "$(dirname -- "$0")" && printf '%s\n' "$(pwd -P)/$(basename -- "$0")")
@@ -10,7 +10,7 @@ fi
 
 export BOSH_ENVIRONMENT=$BOSH_IP
 export BOSH_CLIENT=admin
-export BOSH_CLIENT_SECRET=$($BOSH_CMD int $__BASEDIR__/$BOSH_ALIAS/bosh-vars.yml --path /admin_password)
-export BOSH_CA_CERT="$($BOSH_CMD int $__BASEDIR__/$BOSH_ALIAS/bosh-vars.yml --path /director_ssl/ca)"
+export BOSH_CLIENT_SECRET=$(bosh int $__BASEDIR__/$BOSH_ALIAS/bosh-vars.yml --path /admin_password)
+export BOSH_CA_CERT="$(bosh int $__BASEDIR__/$BOSH_ALIAS/bosh-vars.yml --path /director_ssl/ca)"
 
 unsetDnsOnWifiAdapter

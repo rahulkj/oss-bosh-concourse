@@ -18,8 +18,8 @@ fi
 source "$__DIR__"/load-env.sh
 source $__BASEDIR__/scripts/bosh-login
 
-$BOSH_CMD int $__BASEDIR__/$BOSH_ALIAS/bosh-vars.yml --path /jumpbox_ssh/private_key > $__BASEDIR__/$BOSH_ALIAS/jumpbox.key
-$BOSH_CMD int $__BASEDIR__/$BOSH_ALIAS/bosh-vars.yml --path /director_ssl/ca > $__BASEDIR__/$BOSH_ALIAS/director_ssl_ca.pem
+bosh int $__BASEDIR__/$BOSH_ALIAS/bosh-vars.yml --path /jumpbox_ssh/private_key > $__BASEDIR__/$BOSH_ALIAS/jumpbox.key
+bosh int $__BASEDIR__/$BOSH_ALIAS/bosh-vars.yml --path /director_ssl/ca > $__BASEDIR__/$BOSH_ALIAS/director_ssl_ca.pem
 
 chmod 600 $__BASEDIR__/$BOSH_ALIAS/jumpbox.key
 

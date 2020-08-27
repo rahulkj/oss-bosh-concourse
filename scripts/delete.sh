@@ -10,18 +10,18 @@ source "$__DIR__"/create-yml
 
 source $__BASEDIR__/scripts/bosh-login
 
-DEPLOYMENTS=$($BOSH_CMD deployments --json | jq -r '.Tables[] | .Rows[] | .name')
+DEPLOYMENTS=$(bosh deployments --json | jq -r '.Tables[] | .Rows[] | .name')
 
 if [[ ! -z ${DEPLOYMENTS} ]]; then
   while read -r deployment; do
-    $BOSH_CMD delete-deployment -d $deployment -n --force
+    bosh delete-deployment -d $deployment -n --force
   done <<< "$DEPLOYMENTS"
 fi
-$BOSH_CMD clean-up --all -n
+bosh clean-up --all -n
 
 createBoshDeploymentVarsFile
 
-$BOSH_CMD delete-env $__BASEDIR__/bosh-deployment/bosh.yml \
+bosh delete-env $__BASEDIR__/bosh-deployment/bosh.yml \
   --state=$__BASEDIR__/$BOSH_ALIAS/state.json \
   --vars-store=$__BASEDIR__/$BOSH_ALIAS/bosh-vars.yml \
   -o $__BASEDIR__/bosh-deployment/vsphere/cpi.yml \
