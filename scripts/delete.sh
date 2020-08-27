@@ -40,7 +40,7 @@ $BOSH_CMD delete-env $__BASEDIR__/bosh-deployment/bosh.yml \
   $HTTP_PROXY_OPS_FILES $HTTP_PROXY_VARS
 
 rm -rf $__BASEDIR__/$BOSH_ALIAS
-rm -rf $__BASEDIR__/$BOSH_VAR_FILE
+rm -r $__BASEDIR__/$BOSH_VAR_FILE
 
 if [ -f "$__BASEDIR__/bosh-stemcell-$SC_VERSION-vsphere-esxi-ubuntu-trusty-go_agent.tgz" ]; then
   rm -f $__BASEDIR__/bosh-stemcell-*.tgz
