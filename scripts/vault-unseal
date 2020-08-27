@@ -1,0 +1,19 @@
+#!/bin/bash
+
+if [ -z "$__BASEDIR__" ]; then
+  FILE_PATH=$(cd -P -- "$(dirname -- "$0")" && printf '%s\n' "$(pwd -P)/$(basename -- "$0")")
+  __DIR__="$( cd "$( dirname "${FILE_PATH}" )" && pwd )"
+  __BASEDIR__=$(dirname $__DIR__)
+
+  source $__DIR__/load-env.sh
+fi
+
+export VAULT_ADDR=$1
+
+set +x
+export VAULT_TOKEN=$(cat $__BASEDIR__/$BOSH_ALIAS/vault.log | grep 'Initial Root Token' | awk '{print $4}')
+
+$VAULT_CMD operator unseal $(cat $__BASEDIR__/$BOSH_ALIAS/vault.log | grep 'Unseal Key 1' | awk '{print $4}')
+$VAULT_CMD operator unseal $(cat $__BASEDIR__/$BOSH_ALIAS/vault.log | grep 'Unseal Key 2' | awk '{print $4}')
+$VAULT_CMD operator unseal $(cat $__BASEDIR__/$BOSH_ALIAS/vault.log | grep 'Unseal Key 3' | awk '{print $4}')
+set -x

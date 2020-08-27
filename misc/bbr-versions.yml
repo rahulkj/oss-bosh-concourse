@@ -1,0 +1,9 @@
+- type: remove
+  path: /releases/name=backup-and-restore-sdk/version
+
+- type: replace
+  path: /releases/name=backup-and-restore-sdk?
+  value:
+    name: backup-and-restore-sdk
+    url: ((bbr_release_url))
+    sha1: ((bbr_release_sha))

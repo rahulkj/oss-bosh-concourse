@@ -1,0 +1,57 @@
+---
+
+- type: remove
+  path: /releases/name=bosh/version
+
+- type: replace
+  path: /releases/name=bosh?
+  value:
+    name: bosh
+    url: ((bosh_release_url))
+    sha1: ((bosh_release_sha))
+
+- type: remove
+  path: /releases/name=bosh-vsphere-cpi/version
+
+- type: replace
+  path: /releases/name=bosh-vsphere-cpi?
+  value:
+    name: bosh-vsphere-cpi
+    url: ((vsphere_cpi_release_url))
+    sha1: ((vsphere_cpi_release_sha))
+
+- type: replace
+  path: /resource_pools/name=vms/stemcell?
+  value:
+    url: ((stemcell_url))
+    sha1: ((stemcell_sha))
+
+- type: remove
+  path: /releases/name=uaa/version
+
+- type: replace
+  path: /releases/name=uaa?
+  value:
+    name: uaa
+    url: ((uaa_release_url))
+    sha1: ((uaa_release_sha))
+
+- type: remove
+  path: /releases/name=os-conf/version
+
+- type: replace
+  path: /releases/name=os-conf?
+  value:
+    name: os-conf
+    url: ((os_conf_release_url))
+    sha1: ((os_conf_release_sha))
+
+- type: remove
+  path: /releases/name=credhub/version
+
+- type: replace
+  path: /releases/name=credhub?
+  value:
+    name: credhub
+    url: ((credhub_release_url))
+    sha1: ((credhub_release_sha))

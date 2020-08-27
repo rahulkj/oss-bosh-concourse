@@ -1,0 +1,20 @@
+---
+
+- type: replace
+  path: /stemcells/alias=xenial?
+  value:
+    alias: ((linux_release))
+    os: ubuntu-((linux_release))
+    version: latest
+
+- type: replace
+  path: /instance_groups/name=web/stemcell?
+  value: ((linux_release))
+
+- type: replace
+  path: /instance_groups/name=db/stemcell?
+  value: ((linux_release))
+
+- type: replace
+  path: /instance_groups/name=worker/stemcell?
+  value: ((linux_release))

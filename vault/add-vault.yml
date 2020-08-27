@@ -1,0 +1,13 @@
+---
+
+- type: replace
+  path: /instance_groups/name=web/jobs/name=web/properties/vault?
+  value:
+    path_prefix: ((concourse_path_prefix))
+    url: ((vault_addr))
+    auth:
+      client_token: ((client_token))
+      # backend: ((BACKEND_ROLE))
+      # params:
+      #   role_id: ((ROLE_ID))
+      #   secret_id: ((SECRET_ID))

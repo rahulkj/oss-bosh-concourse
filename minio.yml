@@ -1,0 +1,87 @@
+---
+name: ((minio_deployment_name))
+
+releases:
+- name: minio
+  version: latest
+
+stemcells:
+- alias: default
+  os: ubuntu-((linux_release))
+  version: latest
+
+variables:
+- name: minio_accesskey
+  type: password
+- name: minio_secretkey
+  type: password
+
+instance_groups:
+- name: minio
+  azs: [((az_names))]
+  instances: 1
+  jobs:
+  - name: minio-server
+    release: minio
+    provides:
+      minio-server: {as: minio-link}
+    templates:
+    - name: minio-server
+    properties:
+      credential:
+        accesskey: ((minio_accesskey))
+        secretkey: ((minio_secretkey))
+      port: ((minio_access_port))
+  networks:
+  - name: ((nw_name))
+    static_ips: [ ((minio_static_ips)) ]
+  vm_type: ((minio_vm_type))
+  persistent_disk_type: ((minio_disk_type))
+  stemcell: default
+
+- name: tests
+  azs: [((az_names))]
+  instances: 1
+  lifecycle: errand
+  post_deploy: true
+  jobs:
+  - name: smoke-tests
+    release: minio
+    templates:
+    - name: smoke-tests
+    consumes:
+      minio: {from: minio-link}
+  networks:
+  - name: ((nw_name))
+  vm_type: micro
+  persistent_disk_type: 2048
+  stemcell: default
+
+- name: bucket-seeding # To create default buckets after manifest-deploy
+  azs: [((az_names))]
+  instances: 1
+  lifecycle: errand
+  post_deploy: true
+  jobs:
+  - name: mc
+    release: minio
+    templates:
+    - name: mc
+    consumes:
+      minio: {from: minio-link}
+    properties:
+      script: |
+        #!/bin/sh
+        mc mb myminio/opsman-backup-bucket
+        mc mb myminio/compliance-scanner
+  networks:
+  - name: ((nw_name))
+  vm_type: micro
+  persistent_disk_type: 2048
+  stemcell: default
+
+update:
+  canaries: 1
+  canary_watch_time: 1000-30000
+  update_watch_time: 1000-30000
+  max_in_flight: 1

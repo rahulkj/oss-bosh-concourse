@@ -1,0 +1,12 @@
+bosh*.tgz
+
+.DS_Store
+concourse-bosh-deployment/
+bosh-deployment/
+.terraform
+terraform
+*.key
+bosh*.tgz
+.env
+.envrc
+concourse-bosh

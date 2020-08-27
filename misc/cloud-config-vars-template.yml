@@ -1,0 +1,12 @@
+dns_servers: []
+reserved_ips: []
+static_ips: []
+az_name:
+nw_name:
+vcenter_cluster:
+network_cidr:
+network_name:
+network_gateway:
+vcenter_rp:
+vm_disk_type:
+compilation_vm_type:

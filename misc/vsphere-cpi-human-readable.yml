@@ -1,0 +1,7 @@
+- type: replace
+  path: /instance_groups/name=bosh/properties/vcenter/enable_human_readable_name?
+  value: true
+
+- type: replace
+  path: /cloud_provider/properties/vcenter/enable_human_readable_name?
+  value: true

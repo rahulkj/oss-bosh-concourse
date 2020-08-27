@@ -1,0 +1,13 @@
+---
+
+# update DB instance to include credhub and uaa databases
+- type: replace
+  path: /instance_groups/name=db/jobs/name=postgres/properties/databases/databases/-
+  value:
+    name: uaa
+
+- type: replace
+  path: /instance_groups/name=db/jobs/-
+  value:
+    name: bbr-uaadb
+    release: uaa

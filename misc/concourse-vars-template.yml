@@ -1,0 +1,29 @@
+linux_release:
+local_user:
+  username:
+  password:
+non_tls_bind_port:
+tls_bind_port:
+deployment_name:
+az_name:
+web_network_name:
+web_static_ips:
+concourse_db_ip:
+worker_static_ips:
+concourse_fqdn:
+external_url:
+web_instances:
+web_vm_type:
+db_instances:
+db_vm_type:
+db_persistent_disk_type:
+worker_instances:
+worker_vm_type:
+skip_ssl_validation:
+uaa_http_port:
+bbr_sdk_version:
+bbr_sdk_sha1:
+volume_sweeper_max_in_flight:
+worker_rebalance_interval:
+worker_update_max_in_flight:
+credhub_path_prefix:

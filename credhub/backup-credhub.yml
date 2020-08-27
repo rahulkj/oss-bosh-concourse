@@ -1,0 +1,12 @@
+---
+
+- type: replace
+  path: /instance_groups/name=db/jobs/name=postgres/properties/databases/databases/-
+  value:
+    name: credhub
+
+- type: replace
+  path: /instance_groups/name=db/jobs/-
+  value:
+    name: bbr-credhubdb
+    release: credhub

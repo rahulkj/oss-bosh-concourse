@@ -1,0 +1,11 @@
+- type: replace
+  path: /instance_groups/name=bosh/jobs/name=syslog_forwarder/properties/syslog/heuristically_filter_debug_messages?
+  value: true
+
+- type: replace
+  path: /instance_groups/name=bosh/jobs/name=syslog_forwarder/properties/syslog/filter_legacy_vcap_messages?
+  value : true
+
+- type: replace
+  path: /instance_groups/name=bosh/jobs/name=syslog_forwarder/properties/syslog/use_tcp_for_file_forwarding_local_transport?
+  value : true

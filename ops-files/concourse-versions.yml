@@ -1,0 +1,25 @@
+---
+
+- type: replace
+  path: /releases/name=concourse?
+  value:
+    name: concourse
+    version: ((concourse_release_version))
+
+- type: replace
+  path: /releases/name=garden-runc?
+  value:
+    name: garden-runc
+    version: ((garden_runc_release_version))
+
+- type: replace
+  path: /releases/name=postgres?
+  value:
+    name: postgres
+    version: ((postgres_release_version))
+
+- type: replace
+  path: /releases/name=bpm?
+  value:
+    name: bpm
+    version: ((bpm_release_version))

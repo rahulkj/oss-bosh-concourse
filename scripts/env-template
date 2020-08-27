@@ -1,0 +1,158 @@
+#!/bin/bash
+
+###
+# Export the `ENV` environment variable.
+# Copy this file as $ENV-env.
+# When running scripts in this directory will load the $FOUNDATION-env instead of this file.
+##
+export DEBUG=false
+export BOSH_VAR_FILE=bosh-deployment-vars.yml
+export CONCOURSE_VAR_FILE=concourse-deployment-vars.yml
+export CLOUD_CONFIG_VAR_FILE=cloud-config-vars.yml
+
+export COMPILATION_VM_TYPE=large.disk
+
+export OVERWRITE_MAC_DNS_SERVERS=false
+
+export LATEST_RELEASES=true
+export BOSH_BACKUPS_REQUIRED=false
+export CONCOURSE_BACKUPS_REQUIRED=true
+
+# Provide specific release version numbers
+export BOSH_RELEASE_VERSION=''
+export VSPHERE_CPI_RELEASE_VERSION=''
+export OS_CONF_RELEASE_VERSION=''
+export UAA_RELEASE_VERSION=''
+export CONCOURSE_RELEASE_VERSION=''
+export GARDEN_RUNC_RELEASE_VERSION=''
+export POSTGRES_RELEASE_VERSION=''
+export BOSH_CREDHUB_RELEASE_VERSION=''
+export CREDHUB_RELEASE_VERSION=''
+export CONSUL_RELEASE_VERSION=''
+export VAULT_RELEASE_VERSION=''
+export BBR_RELEASE_VERSION=''
+export BPM_RELEASE_VERSION=''
+
+export LINUX_RELEASE=xenial
+export STEMCELL_VERSION=''
+
+export BOSH_ALIAS=concourse-bosh
+
+export NETWORK_CIDR=172.16.0.0/23
+export NETWORK_GATEWAY=172.16.0.1
+export BOSH_IP=172.16.1.30
+export DNS_SERVERS=172.16.1.2
+export NTP_SERVER=172.16.1.3
+export VCENTER_NETWORK_NAME=
+export VSPHERE_DATACENTER=
+export VCENTER_STORAGE_NAME=
+export VCENTER_IP=
+export VCENTER_USERNAME=
+
+read -s -p "Enter Password for vcenter service user $VCENTER_USERNAME: " VCENTER_PASSWORD
+export VCENTER_PASSWORD=$VCENTER_PASSWORD
+
+export VCENTER_VM_TEMPLATES_FOLDER_NAME=cc_templates
+export VCENTER_VMS_FOLDER_NAME=cc_vms
+export VCENTER_DISK_FOLDER_NAME=cc_disks
+export VCENTER_CLUSTER_NAME=
+export VCENTER_RESOURCE_POOL=
+export VM_DISK_TYPE=thick # thick|thin
+
+export UAA_HTTP_PORT=8080
+
+export AZ_NAME= # Logical Name for AZ
+export NETWORK_NAME= # Logical Name for network
+
+export CREDENTIAL_MANAGER=credhub # credhub|vault|leave blank
+export INSECURE_SKIP_VERIFY=true
+export CONCOURSE_PATH_PREFIX=/concourse
+
+export VAULT_ADDR=http://vault.example.io
+export VAULT_INSTANCES=3
+export VAULT_AZ_NAME=$AZ_NAME
+export VAULT_NW_NAME=$NETWORK_NAME
+export VAULT_STATIC_IPS=172.16.1.32-172.16.1.34 # Block of static IP's for Vault
+export VAULT_VM_TYPE=small.disk
+export VAULT_DISK_TYPE=xlarge
+export VAULT_LOAD_BALANCER_URL=$VAULT_ADDR
+export VAULT_TCP_PORT=80
+
+# optional (will be auto-generated if not specified)
+export VAULT_SERVER_CERT_FILENAME=
+export VAULT_PRIVATE_KEY_FILENAME=
+
+# path to a PEM-encoded trusted cert chain for Vault CLI
+# (uncomment and fill in if required)
+#export VAULT_CACERT=
+
+export ROLE_NAME=cc-role
+export VAULT_POLICY_NAME=cc-policy
+export CONCOURSE_VAULT_MOUNT=/concourse
+
+export BACKEND_ROLE=
+
+export CONCOURSE_AZ_NAME=$AZ_NAME
+export CONCOURSE_NW_NAME=$NETWORK_NAME
+export CONCOURSE_WEB_STATIC_IPS=172.16.1.35 # Block of static IP's for Concourse Web
+export CONCOURSE_DB_STATIC_IPS=172.16.1.36 # Block of static IP's for Concourse DB
+export CONCOURSE_WORKER_STATIC_IPS=172.16.1.37 # Block of static IP's for Concourse Workers
+export CONCOURSE_FQDN=concourse.example.io
+export CONCOURSE_EXTERNAL_URL=https://$CONCOURSE_FQDN
+export CONCOURSE_ADMIN_USERNAME=admin
+
+read -s -p "Enter Password for concourse user $CONCOURSE_ADMIN_USERNAME: " CONCOURSE_ADMIN_PASSWORD
+export CONCOURSE_ADMIN_PASSWORD=$CONCOURSE_ADMIN_PASSWORD
+
+export VOLUME_SWEEPER_MAX_IN_FLIGHT=10
+export WORKER_REBALANCE_INTERVAL=10m
+export WORKER_UPDATE_MAX_IN_FLIGHT=5
+
+export ATC_WEB_INSTANCES=1
+export ATC_WEB_VM_TYPE=micro
+export CONCOURSE_DB_INSTANCES=1
+export CONCOURSE_DB_VM_TYPE=small.disk
+export CONCOURSE_DB_PERSISTENT_DISK_TYPE=102400
+export CONCOURSE_WORKER_INSTANCES=1
+export CONCOURSE_WORKER_VM_TYPE=xlarge.disk
+export TLS_BIND_PORT=443
+export NON_TLS_BIND_PORT=80
+
+export MINIO_AZ_NAMES=$AZ_NAME
+export MINIO_NW_NAME=$NETWORK_NAME
+export MINIO_ACCESSKEY=admin
+export MINIO_SECRETKEY=admin123
+export MINIO_ACCESS_PORT=80
+export MINIO_STATIC_IPS=172.16.1.39
+export MINIO_VM_TYPE=small
+export MINIO_DISK_TYPE=102400
+
+export SYSLOG_ADDRESS=
+export SYSLOG_PORT=
+export SYSLOG_TRANSPORT=tcp
+
+export TSDB_ADDRESS=
+export TSDB_PORT=4242
+
+export RESERVED_IPS=172.16.0.0-172.16.1.30
+export CLOUD_CONFIG_STATIC_IPS=172.16.1.32-172.16.1.41 # Block all the static IP's used here in this deployment
+
+export BOSH_HTTP_PROXY_REQUIRED=false # true or false
+export BOSH_HTTP_PROXY=
+export BOSH_HTTPS_PROXY=
+export BOSH_ADDITIONAL_NO_PROXY_LIST=
+export BOSH_NO_PROXY_PATTERN='172.16.1.{0..30}'
+
+export GIT_CLIENT_USERNAME=
+export GIT_CLIENT_TOKEN=
+export GIT_USERS="[]"
+export GIT_ORGS="[]"
+export GIT_TEAMS="[]"
+
+export NSX_HOST=""
+export NSX_USERNAME=""
+export NSX_PASSWORD=""
+
+export CONCOURSE_NS_GROUP_NAME=""
+
+openssl s_client -showcerts -host ${NSX_HOST} -port 443 </dev/null 2>/dev/null|openssl x509 -outform PEM > /tmp/nsx.pem

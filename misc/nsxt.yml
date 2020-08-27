@@ -1,0 +1,7 @@
+- path: /instance_groups/name=bosh/properties/vcenter/nsxt?
+  type: replace
+  value:
+    ca_cert: ((nsxt_ca_cert))
+    host: ((nsxt_host))
+    password: ((nsxt_password))
+    username: ((nsxt_user))

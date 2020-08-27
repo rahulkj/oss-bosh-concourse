@@ -1,0 +1,32 @@
+#!/bin/bash
+
+FILE_PATH=$(cd -P -- "$(dirname -- "$0")" && printf '%s\n' "$(pwd -P)/$(basename -- "$0")")
+__DIR__="$( cd "$( dirname "${FILE_PATH}" )" && pwd )"
+__BASEDIR__=$(dirname $__DIR__)
+
+export BOSH_ALL_PROXY=ssh+socks5://rjain@jumpbox.homelab.io:22?private-key=/Users/rjain/.ssh/id_rsa
+export CREDHUB_PROXY=${BOSH_ALL_PROXY}
+
+source $__DIR__/load-env.sh
+
+export CREDHUB_CLIENT=director_to_credhub
+export CREDHUB_SECRET=$(bosh int $__BASEDIR__/$BOSH_ALIAS/bosh-vars.yml --path /uaa_clients_director_to_credhub)
+export CREDHUB_SERVER=https://$BOSH_IP:8844
+export CREDHUB_CA_CERT=$(bosh int $__BASEDIR__/$BOSH_ALIAS/bosh-vars.yml --path /credhub_tls/ca)
+export CREDHUB_CA_CERT="$CREDHUB_CA_CERT"\\n$(bosh int $__BASEDIR__/$BOSH_ALIAS/bosh-vars.yml --path /uaa_ssl/ca)
+
+credhub login
+
+echo "Connected to director credhub..."
+
+CREDHUB_CONCOURSE_CA=$(credhub get -n /$BOSH_ALIAS/concourse/atc_tls -j | $JQ_CMD -r '.value.certificate')
+CREDHUB_CONCOURSE_SECRET=$(credhub get -n /$BOSH_ALIAS/concourse/concourse_to_credhub_client_secret -j | $JQ_CMD -r '.value')
+
+export CREDHUB_CLIENT=concourse_to_credhub_client
+export CREDHUB_SECRET=$CREDHUB_CONCOURSE_SECRET
+export CREDHUB_SERVER=$CONCOURSE_EXTERNAL_URL:8844
+export CREDHUB_CA_CERT=$CREDHUB_CONCOURSE_CA
+
+credhub login
+
+echo "Connected to concourse credhub..."

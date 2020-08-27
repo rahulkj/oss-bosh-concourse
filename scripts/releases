@@ -1,0 +1,113 @@
+#!/bin/bash
+
+export BOSH_RELEASE_REPOSITORY=cloudfoundry/bosh
+export VSPHERE_CPI_RELEASE_REPOSITORY=cloudfoundry/bosh-vsphere-cpi-release
+export OS_CONF_RELEASE_REPOSITORY=cloudfoundry/os-conf-release
+export UAA_RELEASE_REPOSITORY=cloudfoundry/uaa-release
+export BPM_RELEASE_REPOSITORY=cloudfoundry/bpm-release
+export CREDHUB_RELEASE_REPOSITORY=pivotal-cf/credhub-release
+export CONCOURSE_RELEASE_REPOSITORY=concourse/concourse-bosh-release
+export GARDEN_RUNC_RELEASE_REPOSITORY=cloudfoundry/garden-runc-release
+export POSTGRES_RELEASE_REPOSITORY=cloudfoundry/postgres-release
+export CONSUL_RELEASE_REPOSITORY=cloudfoundry-community/consul-boshrelease
+export VAULT_RELEASE_REPOSITORY=cloudfoundry-community/vault-boshrelease
+export BBR_RELEASE_REPOSITORY=cloudfoundry-incubator/backup-and-restore-sdk-release
+
+export STEMCELL_NAME=bosh-vsphere-esxi-ubuntu-$LINUX_RELEASE-go_agent
+
+function getReleaseDetails() {
+
+  if [ "$2" != "NA" ]; then
+    PAYLOAD=$(curl -s --fail "https://bosh.io/api/v1/releases/github.com/$1" | jq --arg ver "$2" '.[] | select(.version == $ver)')
+  else
+    PAYLOAD=$(curl -s --fail "https://bosh.io/api/v1/releases/github.com/$1" | jq '.[0]')
+  fi
+  VERSION=$(echo "$PAYLOAD" | jq -r '.version')
+  SHA1=$(echo "$PAYLOAD" | jq -r '.sha1')
+  RELEASE_URL=$(echo "$PAYLOAD" | jq -r '.url')
+
+  echo "$VERSION" "$SHA1" "$RELEASE_URL"
+}
+
+function getStemcellDetails() {
+
+  if [ "$2" != "NA" ]; then
+    PAYLOAD=$(curl -s --fail "https://bosh.io/api/v1/stemcells/$1?all=1" | jq --arg ver "$2" '.[] | select(.version == $ver)')
+  else
+    PAYLOAD=$(curl -s --fail "https://bosh.io/api/v1/stemcells/$1?all=1" | jq '.[0]')
+  fi
+  VERSION=$(echo "$PAYLOAD" | jq -r '.version')
+  SHA1=$(echo "$PAYLOAD" | jq -r '.regular.sha1')
+  RELEASE_URL=$(echo "$PAYLOAD" | jq -r '.regular.url')
+  echo "$VERSION" "$SHA1" "$RELEASE_URL"
+}
+
+read version sha1 release_url < <(getReleaseDetails $BOSH_RELEASE_REPOSITORY ${BOSH_RELEASE_VERSION:-"NA"})
+export BOSH_RELEASE_VERSION=$version
+export BOSH_RELEASE_SHA=$sha1
+export BOSH_RELEASE_URL=$release_url
+
+read version sha1 release_url < <(getReleaseDetails $VSPHERE_CPI_RELEASE_REPOSITORY ${VSPHERE_CPI_RELEASE_VERSION:-"NA"})
+export VSPHERE_CPI_RELEASE_VERSION=$version
+export VSPHERE_CPI_SHA=$sha1
+export VSPHERE_CPI_URL=https://bosh.io/d/github.com/$VSPHERE_CPI_RELEASE_REPOSITORY?v=$VSPHERE_CPI_RELEASE_VERSION
+
+read version sha1 release_url < <(getReleaseDetails $OS_CONF_RELEASE_REPOSITORY ${OS_CONF_RELEASE_VERSION:-"NA"})
+export OS_CONF_RELEASE_VERSION=$version
+export OS_CONF_RELEASE_SHA=$sha1
+export OS_CONF_RELEASE_URL=$release_url
+
+read version sha1 release_url < <(getReleaseDetails $UAA_RELEASE_REPOSITORY ${UAA_RELEASE_VERSION:-"NA"})
+export UAA_RELEASE_VERSION=$version
+export UAA_RELEASE_SHA=$sha1
+export UAA_RELEASE_URL=$release_url
+
+read version sha1 release_url < <(getReleaseDetails $CONCOURSE_RELEASE_REPOSITORY ${CONCOURSE_RELEASE_VERSION:-"NA"})
+export CONCOURSE_RELEASE_VERSION=$version
+export CONCOURSE_RELEASE_SHA=$sha1
+export CONCOURSE_RELEASE_URL=https://bosh.io/d/github.com/$CONCOURSE_RELEASE_REPOSITORY?v=$CONCOURSE_RELEASE_VERSION
+
+read version sha1 release_url < <(getReleaseDetails $GARDEN_RUNC_RELEASE_REPOSITORY ${GARDEN_RUNC_RELEASE_VERSION:-"NA"})
+export GARDEN_RUNC_RELEASE_VERSION=$version
+export GARDEN_RUNC_RELEASE_SHA=$sha1
+export GARDEN_RUNC_RELEASE_URL=https://bosh.io/d/github.com/$GARDEN_RUNC_RELEASE_REPOSITORY?v=$GARDEN_RUNC_RELEASE_VERSION
+
+read version sha1 release_url < <(getReleaseDetails $POSTGRES_RELEASE_REPOSITORY ${POSTGRES_RELEASE_VERSION:-"NA"})
+export POSTGRES_RELEASE_VERSION=$version
+export POSTGRES_RELEASE_SHA=$sha1
+export POSTGRES_RELEASE_URL=https://bosh.io/d/github.com/$POSTGRES_RELEASE_REPOSITORY?v=$POSTGRES_RELEASE_VERSION
+
+read version sha1 release_url < <(getReleaseDetails $CREDHUB_RELEASE_REPOSITORY ${CREDHUB_RELEASE_VERSION:-"NA"})
+export CREDHUB_RELEASE_VERSION=$version
+export CREDHUB_RELEASE_SHA=$sha1
+export CREDHUB_RELEASE_URL=https://bosh.io/d/github.com/$CREDHUB_RELEASE_REPOSITORY?v=$CREDHUB_RELEASE_VERSION
+
+read version sha1 release_url < <(getReleaseDetails $CREDHUB_RELEASE_REPOSITORY ${BOSH_CREDHUB_RELEASE_VERSION:-"NA"})
+export BOSH_CREDHUB_RELEASE_VERSION=$version
+export BOSH_CREDHUB_RELEASE_SHA=$sha1
+export BOSH_CREDHUB_RELEASE_URL=https://bosh.io/d/github.com/$CREDHUB_RELEASE_REPOSITORY?v=$BOSH_CREDHUB_RELEASE_VERSION
+
+read version sha1 release_url < <(getReleaseDetails $CONSUL_RELEASE_REPOSITORY ${CONSUL_RELEASE_VERSION:-"NA"})
+export CONSUL_RELEASE_VERSION=$version
+export CONSUL_RELEASE_SHA=$sha1
+export CONSUL_RELEASE_URL=https://bosh.io/d/github.com/$CONSUL_RELEASE_REPOSITORY?v=$CONSUL_RELEASE_VERSION
+
+read version sha1 release_url < <(getReleaseDetails $VAULT_RELEASE_REPOSITORY ${VAULT_RELEASE_VERSION:-"NA"})
+export VAULT_RELEASE_VERSION=$version
+export VAULT_RELEASE_SHA=$sha1
+export VAULT_RELEASE_URL=https://bosh.io/d/github.com/$VAULT_RELEASE_REPOSITORY?v=$VAULT_RELEASE_VERSION
+
+read version sha1 release_url < <(getReleaseDetails $BPM_RELEASE_REPOSITORY ${BPM_RELEASE_VERSION:-"NA"})
+export BPM_RELEASE_VERSION=$version
+export BPM_RELEASE_SHA=$sha1
+export BPM_RELEASE_URL=https://bosh.io/d/github.com/$BPM_RELEASE_REPOSITORY?v=$BPM_RELEASE_VERSION
+
+read version sha1 stemcell_url < <(getStemcellDetails $STEMCELL_NAME ${STEMCELL_VERSION:-"NA"})
+export SC_VERSION=$version
+export STEMCELL_SHA=$sha1
+export STEMCELL_URL=https://bosh.io/d/stemcells/bosh-vsphere-esxi-ubuntu-$LINUX_RELEASE-go_agent?v=$SC_VERSION
+
+read version sha1 release_url < <(getReleaseDetails $BBR_RELEASE_REPOSITORY ${BBR_RELEASE_VERSION:-"NA"})
+export BBR_RELEASE_VERSION=$version
+export BBR_RELEASE_SHA=$sha1
+export BBR_RELEASE_URL=https://bosh.io/d/github.com/$BBR_RELEASE_REPOSITORY?v=$BBR_RELEASE_VERSION
