@@ -16,5 +16,5 @@ credhub api
 
 echo "Connected to director credhub..."
 
-CONCOURSE_UAA_ADMIN=$(credhub get -n /concourse-bosh/concourse/uaa-admin -j | jq -r '.value')
-CONCOURSE_UAA_ADMIN_SECRET=$(credhub get -n /concourse-bosh/concourse/uaa-admin -j | jq -r '.value')
+CONCOURSE_UAA_ADMIN=$(credhub get -n /concourse-bosh/concourse/uaa_admin -j | jq -r '.value')
+CONCOURSE_UAA_ADMIN_SECRET=$(credhub get -n /concourse-bosh/concourse/uaa_admin -j | jq -r '.value')
