@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 __DIR__=$(dirname "$(realpath $0)")
-__BASE_DIR__=$(dirname $__DIR__)
+__BASEDIR__=$(dirname $__DIR__)
 
 ## Load all the environment variables and the releases
 source "$__DIR__"/load-env.sh
