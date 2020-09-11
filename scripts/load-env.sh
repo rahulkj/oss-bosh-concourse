@@ -9,8 +9,7 @@
 #   source "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"/load-env.sh
 ##
 
-FILE_PATH=$(cd -P -- "$(dirname -- "$0")" && printf '%s\n' "$(pwd -P)/$(basename -- "$0")")
-__DIR__="$( cd "$( dirname "${FILE_PATH}" )" && pwd )"
+__DIR__=$(dirname "$(realpath $0)")
 
 if [[ "$ENV" != "" ]]; then
   echo "sourcing $__DIR__/$ENV-env...."
