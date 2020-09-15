@@ -5,13 +5,22 @@
 # Copy this file as $ENV-env.
 # When running scripts in this directory will load the $FOUNDATION-env instead of this file.
 ##
+
+#export USE_PROXY=true
+export PROXY_VM=jumpbox.example.com
+export PROXY_PORT=22
+export PROXY_USERNAME=some-user
+export PROXY_SSH_PRIVATE_KEY=${HOME}/.ssh/id_rsa
+
+if [[ "$USE_PROXY" = true ]] ; then
+  export BOSH_ALL_PROXY=ssh+socks5://${PROXY_USERNAME}@${PROXY_VM}:${PROXY_PORT}?private-key=${PROXY_SSH_PRIVATE_KEY}
+  export CREDHUB_PROXY=${BOSH_ALL_PROXY}
+fi
+
 export DEBUG=false
 export BOSH_VAR_FILE=bosh-deployment-vars.yml
 export CONCOURSE_VAR_FILE=concourse-deployment-vars.yml
 export CLOUD_CONFIG_VAR_FILE=cloud-config-vars.yml
-
-export BOSH_ALL_PROXY=ssh+socks5://${USER}@${PROXY_VM}:22?private-key=${PRIVATE_SSH_KEY}
-export CREDHUB_PROXY=${BOSH_ALL_PROXY}
 
 export COMPILATION_VM_TYPE=large.disk
 
