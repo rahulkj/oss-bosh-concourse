@@ -11,8 +11,6 @@ export CREDHUB_SERVER=https://$BOSH_IP:8844
 export CREDHUB_CA_CERT=$(bosh int $BASE_DIR/$BOSH_ALIAS/bosh-vars.yml --path /credhub_tls/ca)
 export CREDHUB_CA_CERT="$CREDHUB_CA_CERT"\\n$(bosh int $BASE_DIR/$BOSH_ALIAS/bosh-vars.yml --path /uaa_ssl/ca)
 
-credhub login
-
 echo "Connected to director credhub..."
 
 CREDHUB_CONCOURSE_CA=$(credhub get -n /$BOSH_ALIAS/concourse/atc_tls -j | jq -r '.value.certificate')
@@ -22,7 +20,5 @@ export CREDHUB_CLIENT=concourse_to_credhub_client
 export CREDHUB_SECRET=$CREDHUB_CONCOURSE_SECRET
 export CREDHUB_SERVER=$CONCOURSE_EXTERNAL_URL:8844
 export CREDHUB_CA_CERT=$CREDHUB_CONCOURSE_CA
-
-credhub login
 
 echo "Connected to concourse credhub..."
