@@ -9,14 +9,14 @@
 #   source "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"/load-env.sh
 ##
 
-__DIR__=$(dirname "$(realpath $0)")
+DIR=$(dirname "$(realpath $0)")
 
 if [[ "$ENV" != "" ]]; then
-  echo "sourcing $__DIR__/$ENV-env...."
-  source "$__DIR__"/$ENV-env
+  echo "sourcing $DIR/$ENV-env...."
+  source "$DIR"/$ENV-env
 else
-  echo "sourcing $__DIR__/.env...."
-  source "$__DIR__"/.env
+  echo "sourcing $DIR/.env...."
+  source "$DIR"/.env
 fi
 
 UNAME=$(uname)
@@ -42,8 +42,8 @@ function unsetDnsOnWifiAdapter() {
 }
 
 function updateCloudConfig() {
-  bosh -n update-cloud-config $__BASEDIR__/cloud-configs/cloud-config.yml \
-    -l $__BASEDIR__/cloud-config-vars.yml
+  bosh -n update-cloud-config $BASE_DIR/cloud-configs/cloud-config.yml \
+    -l $BASE_DIR/cloud-config-vars.yml
 }
 
 function uploadRelease() {

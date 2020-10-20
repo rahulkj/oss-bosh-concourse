@@ -1,15 +1,15 @@
 #!/bin/bash
 
-if [ -z "$__BASEDIR__" ]; then
-  __DIR__=$(dirname "$(realpath $0)")
-  __BASEDIR__=$(dirname $__DIR__)
+if [ -z "$BASE_DIR" ]; then
+  DIR=$(dirname "$(realpath $0)")
+  BASE_DIR=$(dirname $DIR)
 
-  source $__DIR__/load-env.sh
+  source $DIR/load-env.sh
 fi
 
 export BOSH_ENVIRONMENT=$BOSH_IP
 export BOSH_CLIENT=admin
-export BOSH_CLIENT_SECRET=$(bosh int $__BASEDIR__/$BOSH_ALIAS/bosh-vars.yml --path /admin_password)
-export BOSH_CA_CERT="$(bosh int $__BASEDIR__/$BOSH_ALIAS/bosh-vars.yml --path /director_ssl/ca)"
+export BOSH_CLIENT_SECRET=$(bosh int $BASE_DIR/$BOSH_ALIAS/bosh-vars.yml --path /admin_password)
+export BOSH_CA_CERT="$(bosh int $BASE_DIR/$BOSH_ALIAS/bosh-vars.yml --path /director_ssl/ca)"
 
 unsetDnsOnWifiAdapter

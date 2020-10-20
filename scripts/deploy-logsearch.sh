@@ -1,11 +1,11 @@
 #!/bin/bash -e
 
-__DIR__=$(dirname "$(realpath $0)")
-__BASEDIR__=$(dirname $__DIR__)
+DIR=$(dirname "$(realpath $0)")
+BASE_DIR=$(dirname $DIR)
 
-source "$__DIR__"/load-env.sh
-source "$__DIR__"/releases
-source "$__DIR__"/bosh-login
+source "$DIR"/load-env.sh
+source "$DIR"/releases
+source "$DIR"/bosh-login
 
 bosh upload-release --sha1 6da3a6f4f33ada63ecef9ae39c2739f3af60d760 \
   https://bosh.io/d/github.com/cloudfoundry-community/logsearch-boshrelease?v=210.0.0
@@ -13,9 +13,9 @@ bosh upload-release --sha1 6da3a6f4f33ada63ecef9ae39c2739f3af60d760 \
 bosh upload-release --sha1 c69ad70cf778cb70a92e51606be9be94d656521e \
   https://bosh.io/d/github.com/cloudfoundry-community/logsearch-for-cloudfoundry?v=210.0.0
 
-git clone https://github.com/cloudfoundry-community/logsearch-boshrelease $__BASEDIR__/logsearch-boshrelease
+git clone https://github.com/cloudfoundry-community/logsearch-boshrelease $BASE_DIR/logsearch-boshrelease
 
-pushd $__BASEDIR__/logsearch-boshrelease/deployment
+pushd $BASE_DIR/logsearch-boshrelease/deployment
 
 # rm -rf logsearch.yml
 

@@ -1,9 +1,9 @@
 #!/bin/bash -e
 
-__DIR__=$(dirname "$(realpath $0)")
+DIR=$(dirname "$(realpath $0)")
 
-source "$__DIR__"/load-env.sh
-source "$__DIR__"/releases
-source "$__DIR__"/bosh-login
+source "$DIR"/load-env.sh
+source "$DIR"/releases
+source "$DIR"/bosh-login
 
 bosh -d minio run-errand bucket-seeding

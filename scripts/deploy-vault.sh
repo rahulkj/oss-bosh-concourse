@@ -4,7 +4,7 @@ uploadRelease "consul" $CONSUL_RELEASE_VERSION $CONSUL_RELEASE_URL
 uploadRelease "vault" $VAULT_RELEASE_VERSION $VAULT_RELEASE_URL
 
 ##### VAULT DEPLOYMENT START #####
-VAULT_TLS_FLAGS="--vars-store $__BASEDIR__/$BOSH_ALIAS/vault-vars.yml"
+VAULT_TLS_FLAGS="--vars-store $BASE_DIR/$BOSH_ALIAS/vault-vars.yml"
 if [[ ! -z "$VAULT_SERVER_CERT_FILENAME" ]]; then
   VAULT_TLS_FLAGS="--var-file vault-tls.certificate=$VAULT_SERVER_CERT_FILENAME --var-file vault-tls.private_key=$VAULT_PRIVATE_KEY_FILENAME"
   echo "Using provided Vault cert"
@@ -12,7 +12,7 @@ else
   echo "Generating cert for Vault"
 fi
 
-bosh -n -d vault deploy $__BASEDIR__/vault/vault.yml \
+bosh -n -d vault deploy $BASE_DIR/vault/vault.yml \
   -v VAULT_AZ_NAME="$VAULT_AZ_NAME" \
   -v VAULT_NW_NAME="$VAULT_NW_NAME" \
   -v STATIC_IPS="$VAULT_STATIC_IPS" \
@@ -36,14 +36,14 @@ if [ $IS_VAULT_INTIALIZED -eq 501 ]; then
 
   VAULT_INIT_RESPONSE=$(vault init)
 
-  rm -rf $__BASEDIR__/$BOSH_ALIAS/vault.log
+  rm -rf $BASE_DIR/$BOSH_ALIAS/vault.log
 
-  echo "$VAULT_INIT_RESPONSE" > $__BASEDIR__/$BOSH_ALIAS/vault.log
+  echo "$VAULT_INIT_RESPONSE" > $BASE_DIR/$BOSH_ALIAS/vault.log
 
   # Unseal the vault
   IPS=`bosh vms -d vault --json | jq -r '.Tables[0].Rows[] | .ips'`
   for ip in $IPS; do
-    $__BASEDIR__/scripts/vault-unseal.sh http://$ip
+    $BASE_DIR/scripts/vault-unseal.sh http://$ip
   done
 
 elif [ $IS_VAULT_INTIALIZED -eq 503 ]; then
@@ -51,7 +51,7 @@ elif [ $IS_VAULT_INTIALIZED -eq 503 ]; then
   echo "Unsealing vault"
   IPS=`bosh vms -d vault --json | jq -r '.Tables[0].Rows[] | .ips'`
   for ip in $IPS; do
-    $__BASEDIR__/scripts/vault-unseal.sh http://$ip
+    $BASE_DIR/scripts/vault-unseal.sh http://$ip
   done
 elif [ $IS_VAULT_INTIALIZED -eq 500 ]; then
   echo "Vault is hosed.. troubleshoot it using bosh commands"
@@ -75,14 +75,14 @@ fi
 
 #### VAULT CONFIGURATION END #####
 
-if [[ ! -e $__BASEDIR__/$BOSH_ALIAS/create_token_response.json ]]; then
-  export VAULT_TOKEN=$(cat $__BASEDIR__/$BOSH_ALIAS/vault.log | grep 'Initial Root Token' | awk '{print $4}')
+if [[ ! -e $BASE_DIR/$BOSH_ALIAS/create_token_response.json ]]; then
+  export VAULT_TOKEN=$(cat $BASE_DIR/$BOSH_ALIAS/vault.log | grep 'Initial Root Token' | awk '{print $4}')
   # Create a mount for concourse
   vault secrets enable -path=$CONCOURSE_VAULT_MOUNT -description="Secrets for use by concourse pipelines" generic
 
   # Create application policy
-  vault policy write $VAULT_POLICY_NAME $__BASEDIR__/vault/vault-policy.hcl
+  vault policy write $VAULT_POLICY_NAME $BASE_DIR/vault/vault-policy.hcl
   CREATE_TOKEN_RESPONSE=$(vault token create --policy=$VAULT_POLICY_NAME -period="87600h" -format=json)
-  rm -rf $__BASEDIR__/$BOSH_ALIAS/create_token_response.json
-  echo $CREATE_TOKEN_RESPONSE > $__BASEDIR__/$BOSH_ALIAS/create_token_response.json
+  rm -rf $BASE_DIR/$BOSH_ALIAS/create_token_response.json
+  echo $CREATE_TOKEN_RESPONSE > $BASE_DIR/$BOSH_ALIAS/create_token_response.json
 fi

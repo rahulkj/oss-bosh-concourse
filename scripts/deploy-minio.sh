@@ -1,11 +1,11 @@
 #!/bin/bash -e
 
-__DIR__=$(dirname "$(realpath $0)")
-__BASEDIR__=$(dirname $__DIR__)
+DIR=$(dirname "$(realpath $0)")
+BASE_DIR=$(dirname $DIR)
 
-source "$__DIR__"/load-env.sh
-source "$__DIR__"/releases
-source "$__DIR__"/bosh-login
+source "$DIR"/load-env.sh
+source "$DIR"/releases
+source "$DIR"/bosh-login
 
 MINIO_RELEASE_REPOSITORY=minio/minio-boshrelease
 MINIO_RELEASE_VERSION=''
@@ -18,8 +18,8 @@ export MINIO_RELEASE_URL=$release_url
 uploadRelease "minio" $MINIO_RELEASE_VERSION $MINIO_RELEASE_URL
 
 bosh -n deploy \
-  $__BASEDIR__/minio.yml -d minio \
-  --vars-store=$__BASEDIR__/$BOSH_ALIAS/minio-vars.yml \
+  $BASE_DIR/minio.yml -d minio \
+  --vars-store=$BASE_DIR/$BOSH_ALIAS/minio-vars.yml \
   -v minio_deployment_name="minio" \
   -v linux_release="$LINUX_RELEASE" \
   -v az_names="$MINIO_AZ_NAMES" \
