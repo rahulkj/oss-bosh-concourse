@@ -1,11 +1,11 @@
 #!/bin/bash
 
-if [ -z "$BASE_DIR" ]; then
-  DIR=$(dirname "$(realpath $0)")
-  BASE_DIR=$(dirname $DIR)
+if [ -z "$__BASE_DIR__" ]; then
+  __DIR__=$(dirname "$(realpath $0)")
+  __BASE_DIR__=$(dirname $__DIR__)
 
   source $DIR/load-env.sh
 fi
 
-export VAULT_TOKEN=$(cat $BASE_DIR/$BOSH_ALIAS/vault.log | grep 'Initial Root Token' | awk '{print $4}')
+export VAULT_TOKEN=$(cat $__BASE_DIR__/$BOSH_ALIAS/vault.log | grep 'Initial Root Token' | awk '{print $4}')
 vault login $VAULT_TOKEN

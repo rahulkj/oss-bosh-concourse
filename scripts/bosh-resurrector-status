@@ -1,20 +1,20 @@
 #!/bin/bash
 
-if [ -z "$BASE_DIR" ]; then
-  DIR=$(dirname "$(realpath $0)")
-  BASE_DIR=$(dirname $DIR)
+if [ -z "$__BASE_DIR__" ]; then
+  __DIR__=$(dirname "$(realpath $0)")
+  __BASE_DIR__=$(dirname $__DIR__)
 
-  source $DIR/load-env.sh
+  source $__DIR__/load-env.sh
 fi
 
-bosh int $BASE_DIR/$BOSH_ALIAS/bosh-vars.yml --path /jumpbox_ssh/private_key > $BASE_DIR/$BOSH_ALIAS/jumpbox.key
-chmod 600 $BASE_DIR/$BOSH_ALIAS/jumpbox.key
+bosh int $__BASE_DIR__/$BOSH_ALIAS/bosh-vars.yml --path /jumpbox_ssh/private_key > $__BASE_DIR__/$BOSH_ALIAS/jumpbox.key
+chmod 600 $__BASE_DIR__/$BOSH_ALIAS/jumpbox.key
 
 set +e
 ssh-keygen -R $BOSH_IP
 set -e
 
 OUTPUT=$(ssh -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no jumpbox@$BOSH_IP \
-  -i $BASE_DIR/$BOSH_ALIAS/jumpbox.key "/var/vcap/packages/postgres-10/bin/psql -qtAX -U vcap bosh -h 127.0.0.1 -c \"select value from director_attributes where name = 'resurrection_paused'\"")
+  -i $__BASE_DIR__/$BOSH_ALIAS/jumpbox.key "/var/vcap/packages/postgres-10/bin/psql -qtAX -U vcap bosh -h 127.0.0.1 -c \"select value from director_attributes where name = 'resurrection_paused'\"")
 
 echo "{"resurrection_paused": "$OUTPUT"}"

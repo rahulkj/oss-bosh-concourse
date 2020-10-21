@@ -1,17 +1,17 @@
 #!/bin/bash -e
 
-if [ -z "$BASE_DIR" ]; then
-  DIR=$(dirname "$(realpath $0)")
-  BASE_DIR=$(dirname $DIR)
+if [ -z "$__BASE_DIR__" ]; then
+  __DIR__=$(dirname "$(realpath $0)")
+  __BASE_DIR__=$(dirname $__DIR__)
 
-  source $DIR/load-env.sh
+  source $__DIR__/load-env.sh
 fi
 
-bosh int $BASE_DIR/$BOSH_ALIAS/bosh-vars.yml --path /jumpbox_ssh/private_key > $BASE_DIR/$BOSH_ALIAS/jumpbox.key
-chmod 600 $BASE_DIR/$BOSH_ALIAS/jumpbox.key
+bosh int $__BASE_DIR__/$BOSH_ALIAS/bosh-vars.yml --path /jumpbox_ssh/private_key > $__BASE_DIR__/$BOSH_ALIAS/jumpbox.key
+chmod 600 $__BASE_DIR__/$BOSH_ALIAS/jumpbox.key
 
 set +e
 ssh-keygen -R $BOSH_IP
 set -e
 
-ssh jumpbox@$BOSH_IP -i $BASE_DIR/$BOSH_ALIAS/jumpbox.key
+ssh jumpbox@$BOSH_IP -i $__BASE_DIR__/$BOSH_ALIAS/jumpbox.key

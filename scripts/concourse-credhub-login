@@ -1,15 +1,17 @@
 #!/bin/bash
 
-DIR=$(dirname "$(realpath $0)")
-BASE_DIR=$(dirname $DIR)
+if [ -z "$__BASE_DIR__" ]; then
+  __DIR__=$(dirname "$(realpath $0)")
+  __BASE_DIR__=$(dirname $__DIR__)
 
-source $DIR/load-env.sh
+  source $__DIR__/load-env.sh
+fi
 
 export CREDHUB_CLIENT=director_to_credhub
-export CREDHUB_SECRET=$(bosh int $BASE_DIR/$BOSH_ALIAS/bosh-vars.yml --path /uaa_clients_director_to_credhub)
+export CREDHUB_SECRET=$(bosh int $__BASE_DIR__/$BOSH_ALIAS/bosh-vars.yml --path /uaa_clients_director_to_credhub)
 export CREDHUB_SERVER=https://$BOSH_IP:8844
-export CREDHUB_CA_CERT=$(bosh int $BASE_DIR/$BOSH_ALIAS/bosh-vars.yml --path /credhub_tls/ca)
-export CREDHUB_CA_CERT="$CREDHUB_CA_CERT"\\n$(bosh int $BASE_DIR/$BOSH_ALIAS/bosh-vars.yml --path /uaa_ssl/ca)
+export CREDHUB_CA_CERT=$(bosh int $__BASE_DIR__/$BOSH_ALIAS/bosh-vars.yml --path /credhub_tls/ca)
+export CREDHUB_CA_CERT="$CREDHUB_CA_CERT"\\n$(bosh int $__BASE_DIR__/$BOSH_ALIAS/bosh-vars.yml --path /uaa_ssl/ca)
 
 echo "Connected to director credhub..."
 
