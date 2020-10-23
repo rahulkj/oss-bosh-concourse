@@ -9,6 +9,13 @@ source "$__DIR__"/create-yml
 
 source $__BASE_DIR__/scripts/bosh-login
 
+## Check to see if the bosh-deployment folder exists, if not then clone it, else pull the latest code
+if [ ! -d "$__BASE_DIR__/bosh-deployment" ]; then
+  git clone https://github.com/cloudfoundry/bosh-deployment $__BASE_DIR__/bosh-deployment
+else
+  cd $__BASE_DIR__/bosh-deployment && git pull && cd ..
+fi
+
 DEPLOYMENTS=$(bosh deployments --json | jq -r '.Tables[] | .Rows[] | .name')
 
 if [[ ! -z ${DEPLOYMENTS} ]]; then
