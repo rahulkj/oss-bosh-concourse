@@ -92,7 +92,7 @@ function createCloudConfigVarsFile() {
   cp $__BASE_DIR__/misc/cloud-config-vars-template.yml $__BASE_DIR__/$CLOUD_CONFIG_VAR_FILE
   yq eval -i ".dns_servers=$DNS_SERVERS" $__BASE_DIR__/$CLOUD_CONFIG_VAR_FILE
   yq eval -i ".reserved_ips=$RESERVED_IPS" $__BASE_DIR__/$CLOUD_CONFIG_VAR_FILE 
-  yq eval -i "static_ips=$CLOUD_CONFIG_STATIC_IPS" $__BASE_DIR__/$CLOUD_CONFIG_VAR_FILE
+  yq eval -i ".static_ips=$CLOUD_CONFIG_STATIC_IPS" $__BASE_DIR__/$CLOUD_CONFIG_VAR_FILE
   yq eval -i ".az_name=\"$CONCOURSE_AZ_NAME\"" $__BASE_DIR__/$CLOUD_CONFIG_VAR_FILE
   yq eval -i ".nw_name=\"$CONCOURSE_NW_NAME\"" $__BASE_DIR__/$CLOUD_CONFIG_VAR_FILE
   yq eval -i ".vcenter_cluster=\"$VCENTER_CLUSTER_NAME\"" $__BASE_DIR__/$CLOUD_CONFIG_VAR_FILE
