@@ -64,12 +64,12 @@ function createConcourseDeploymentVarsFile() {
   yq eval -i ".worker_static_ips=\"$CONCOURSE_WORKER_STATIC_IPS\"" $__BASE_DIR__/$CONCOURSE_VAR_FILE
   yq eval -i ".external_host=\"$CONCOURSE_FQDN\"" $__BASE_DIR__/$CONCOURSE_VAR_FILE
   yq eval -i ".external_url=\"$CONCOURSE_EXTERNAL_URL\"" $__BASE_DIR__/$CONCOURSE_VAR_FILE
-  yq eval -i ".web_instances=\"$ATC_WEB_INSTANCES\"" $__BASE_DIR__/$CONCOURSE_VAR_FILE
+  yq eval -i ".web_instances=$ATC_WEB_INSTANCES" $__BASE_DIR__/$CONCOURSE_VAR_FILE
   yq eval -i ".web_vm_type=\"$ATC_WEB_VM_TYPE\"" $__BASE_DIR__/$CONCOURSE_VAR_FILE
-  yq eval -i ".db_instances=\"$CONCOURSE_DB_INSTANCES\"" $__BASE_DIR__/$CONCOURSE_VAR_FILE
+  yq eval -i ".db_instances=$CONCOURSE_DB_INSTANCES" $__BASE_DIR__/$CONCOURSE_VAR_FILE
   yq eval -i ".db_vm_type=\"$CONCOURSE_DB_VM_TYPE\"" $__BASE_DIR__/$CONCOURSE_VAR_FILE
   yq eval -i ".db_persistent_disk_type=\"$CONCOURSE_DB_PERSISTENT_DISK_TYPE\"" $__BASE_DIR__/$CONCOURSE_VAR_FILE
-  yq eval -i ".worker_instances=\"$CONCOURSE_WORKER_INSTANCES\"" $__BASE_DIR__/$CONCOURSE_VAR_FILE
+  yq eval -i ".worker_instances=$CONCOURSE_WORKER_INSTANCES" $__BASE_DIR__/$CONCOURSE_VAR_FILE
   yq eval -i ".worker_vm_type=\"$CONCOURSE_WORKER_VM_TYPE\"" $__BASE_DIR__/$CONCOURSE_VAR_FILE
   yq eval -i ".github_client.username=\"$GIT_CLIENT_USERNAME\"" $__BASE_DIR__/$CONCOURSE_VAR_FILE
   yq eval -i ".github_client.password=\"$GIT_CLIENT_TOKEN\"" $__BASE_DIR__/$CONCOURSE_VAR_FILE
