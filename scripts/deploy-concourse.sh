@@ -87,23 +87,23 @@ bosh -n deploy $__BASE_DIR__/concourse-bosh-deployment/cluster/concourse.yml \
   $CONCOURSE_VERSIONS_TO_DEPLOY \
   -o $__BASE_DIR__/ops-files/nws-azs.yml \
   -o $__BASE_DIR__/ops-files/stemcell.yml \
-  -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/scale.yml \
   -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/basic-auth.yml \
   -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/github-auth.yml \
   -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/credhub-path-prefix.yml \
   -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/privileged-http.yml \
   -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/privileged-https.yml \
-  -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/worker-max-in-flight.yml \
-  -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/worker-rebalancing.yml \
-  -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/worker-volume-sweeper-max-in-flight.yml \
   -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/tls.yml \
   -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/tls-vars.yml \
-  -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/secure-internal-postgres.yml \
   -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/uaa.yml \
   -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/credhub-colocated.yml \
+  -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/scale.yml \
+  -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/secure-internal-postgres.yml \
   -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/secure-internal-postgres-credhub.yml \
   -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/secure-internal-postgres-uaa.yml \
   -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/secure-internal-postgres-bbr.yml \
+  -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/worker-max-in-flight.yml \
+  -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/worker-rebalancing.yml \
+  -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/worker-volume-sweeper-max-in-flight.yml \
   -l $__BASE_DIR__/$CONCOURSE_VAR_FILE \
   $HTTP_PROXY_OPS_FILES $HTTP_PROXY_VARS $BBR_OPS_FILES $BBR_VARS
   # -o $__BASE_DIR__/ops-files/vm-extensions.yml \
