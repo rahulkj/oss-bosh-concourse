@@ -87,8 +87,13 @@ fi
 
 createConcourseDeploymentVarsFile
 
+DEPLOY_OPTION="-n deploy"
+if [[ "$INTERPOLATE" == "true" ]]; then
+  DEPLOY_OPTION="int"
+fi
+
 #### CONCOURSE DEPLOYMENT START #####
-bosh -n deploy $__BASE_DIR__/concourse-bosh-deployment/cluster/concourse.yml \
+bosh $DEPLOY_OPTION $__BASE_DIR__/concourse-bosh-deployment/cluster/concourse.yml \
   -d concourse \
   $CONCOURSE_VERSIONS_TO_DEPLOY \
   -o $__BASE_DIR__/ops-files/nws-azs.yml \
