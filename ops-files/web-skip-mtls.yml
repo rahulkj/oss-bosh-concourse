@@ -1,4 +1,4 @@
 ---
 
 - type: remove
-  path: /instance_groups/name=web/jobs/name=web/properties/tls?/cert?/ca?
+  path: /instance_groups/name=web/jobs/name=web/properties/tls.cert?/ca?
