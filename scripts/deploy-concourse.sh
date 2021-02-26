@@ -79,6 +79,12 @@ if [[ "$CONCOURSE_BACKUPS_REQUIRED" == "true" ]]; then
     -o $__BASE_DIR__/credhub/backup-credhub.yml"
 fi
 
+## If HTTP Proxy is needed include the proxy ops files while deploying bosh
+SKIP_MTLS_OPS_FILES=" "
+if [[ "$CONCOURSE_MTLS_REQUIRED" == "false" ]]; then
+  SKIP_MTLS_OPS_FILES=" -o $__BASE_DIR__/ops-files/web-skip-mtls.yml"
+fi
+
 createConcourseDeploymentVarsFile
 
 #### CONCOURSE DEPLOYMENT START #####
@@ -105,7 +111,7 @@ bosh -n deploy $__BASE_DIR__/concourse-bosh-deployment/cluster/concourse.yml \
   -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/worker-rebalancing.yml \
   -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/worker-volume-sweeper-max-in-flight.yml \
   -l $__BASE_DIR__/$CONCOURSE_VAR_FILE \
-  $HTTP_PROXY_OPS_FILES $HTTP_PROXY_VARS $BBR_OPS_FILES $BBR_VARS
+  $HTTP_PROXY_OPS_FILES $HTTP_PROXY_VARS $BBR_OPS_FILES $BBR_VARS $SKIP_MTLS_OPS_FILES
   # -o $__BASE_DIR__/ops-files/vm-extensions.yml \
 
 ##### CONCOURSE DEPLOYMENT END #####
