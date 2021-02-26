@@ -1,4 +1,14 @@
 ---
 
 - type: remove
-  path: /instance_groups/name=web/jobs/name=web/properties/tls.cert?/ca?
+  path: /instance_groups/name=web/jobs/name=web/properties/tls?cert
+
+- type: replace
+  path: /instance_groups/name=web/jobs/name=web/properties/tls_bind_port?
+  value: ((atc_tls.bind_port))
+- type: replace
+  path: /instance_groups/name=web/jobs/name=web/properties/tls_cert?
+  value: ((atc_tls.certificate))
+- type: replace
+  path: /instance_groups/name=web/jobs/name=web/properties/tls_key?
+  value: ((atc_tls.private_key))
