@@ -4,6 +4,10 @@
   path: /instance_groups/name=web/jobs/name=web/properties/tls
 
 - type: replace
+  path: /instance_groups/name=web/jobs/name=web/properties/tls_bind_port?
+  value: 443
+
+- type: replace
   path: /instance_groups/name=web/jobs/name=web/properties/tls_cert?
   value: ((atc_tls.certificate))
 
