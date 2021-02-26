@@ -1,7 +1,7 @@
 ---
 
 - type: remove
-  path: /instance_groups/name=web/jobs/name=web/properties/tls?cert
+  path: /instance_groups/name=web/jobs/name=web/properties/tls
 
 - type: replace
   path: /instance_groups/name=web/jobs/name=web/properties/tls_bind_port?
