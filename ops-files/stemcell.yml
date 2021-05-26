@@ -1,7 +1,7 @@
 ---
 
 - type: replace
-  path: /stemcells/alias=xenial?
+  path: /stemcells/alias=((linux_release))?
   value:
     alias: ((linux_release))
     os: ubuntu-((linux_release))
