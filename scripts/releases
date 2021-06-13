@@ -105,7 +105,7 @@ export BPM_RELEASE_URL=https://bosh.io/d/github.com/$BPM_RELEASE_REPOSITORY?v=$B
 read version sha1 stemcell_url < <(getStemcellDetails $STEMCELL_NAME ${STEMCELL_VERSION:-"NA"})
 export SC_VERSION=$version
 export STEMCELL_SHA=$sha1
-export STEMCELL_URL=https://storage.googleapis.com/bosh-core-stemcells/$SC_VERSION/bosh-stemcell-$SC_VERSION-vsphere-esxi-ubuntu-$LINUX_RELEASE-go_agent.tgz
+export STEMCELL_URL=https://bosh.io/d/stemcells/bosh-vsphere-esxi-ubuntu-$LINUX_RELEASE-go_agent?v=$SC_VERSION
 
 read version sha1 release_url < <(getReleaseDetails $BBR_RELEASE_REPOSITORY ${BBR_RELEASE_VERSION:-"NA"})
 export BBR_RELEASE_VERSION=$version
