@@ -37,7 +37,7 @@ set -e
 if [[ ! -f "$__BASE_DIR__/bosh-stemcell-$SC_VERSION-vsphere-esxi-ubuntu-$LINUX_RELEASE-go_agent.tgz" ]]; then
   rm -f $__BASE_DIR__/bosh-stemcell-*.tgz
   wget -O $__BASE_DIR__/bosh-stemcell-$SC_VERSION-vsphere-esxi-ubuntu-$LINUX_RELEASE-go_agent.tgz \
-        https://s3.amazonaws.com/bosh-core-stemcells/$SC_VERSION/bosh-stemcell-$SC_VERSION-vsphere-esxi-ubuntu-$LINUX_RELEASE-go_agent.tgz
+    https://storage.googleapis.com/bosh-core-stemcells/$SC_VERSION/bosh-stemcell-$SC_VERSION-vsphere-esxi-ubuntu-$LINUX_RELEASE-go_agent.tgz
 fi
 
 ## Upload the stemcell to bosh director
