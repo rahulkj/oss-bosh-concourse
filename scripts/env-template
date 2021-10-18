@@ -70,6 +70,7 @@ export VCENTER_DISK_FOLDER_NAME=cc_disks
 export VCENTER_CLUSTER_NAME=
 export VCENTER_RESOURCE_POOL=
 export VM_DISK_TYPE=thick # thick|thin
+export BOSH_DISK_SIZE=102400
 
 export UAA_HTTP_PORT=8080
 
