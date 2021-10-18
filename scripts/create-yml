@@ -47,6 +47,7 @@ function createBoshDeploymentVarsFile() {
   yq eval -i ".nsxt_user=\"$NSX_USERNAME\"" $__BASE_DIR__/$BOSH_VAR_FILE
   yq eval -i ".nsxt_password=\"$NSX_PASSWORD\"" $__BASE_DIR__/$BOSH_VAR_FILE
   yq eval -i ".nsxt_ca_cert=\"$(< /tmp/nsx.pem)\"" $__BASE_DIR__/$BOSH_VAR_FILE
+  yq eval -i ".bosh_disk_size=$BOSH_DISK_SIZE" $__BASE_DIR__/$BOSH_VAR_FILE
 }
 
 function createConcourseDeploymentVarsFile() {

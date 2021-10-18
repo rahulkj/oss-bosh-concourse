@@ -29,3 +29,4 @@ nsxt_host:
 nsxt_user:
 nsxt_password:
 nsxt_ca_cert:
+bosh_disk_size:

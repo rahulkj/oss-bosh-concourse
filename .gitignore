@@ -9,4 +9,5 @@ terraform
 bosh*.tgz
 .env
 .envrc
-concourse-bosh
+concourse-bosh*
+*-env

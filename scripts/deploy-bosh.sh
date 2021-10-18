@@ -73,6 +73,7 @@ bosh create-env $__BASE_DIR__/bosh-deployment/bosh.yml \
   -o $__BASE_DIR__/bosh-deployment/credhub.yml \
   -o $__BASE_DIR__/misc/vsphere-cpi-human-readable.yml \
   -o $__BASE_DIR__/misc/nsxt.yml \
+  -o $__BASE_DIR__/misc/bosh-disk.yml \
   -l $__BASE_DIR__/$BOSH_VAR_FILE \
   $HTTP_PROXY_OPS_FILES $HTTP_PROXY_VARS $BBR_OPS_FILES $BBR_VARS $VERSIONS_FILE
 

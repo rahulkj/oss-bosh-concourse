@@ -1,0 +1,8 @@
+- type: remove
+  path: /disk_pools/name=disks
+
+- type: replace
+  path: /releases/name=disks?
+  value:
+    name: disks
+    disk_size: ((bosh_disk_size))
