@@ -15,8 +15,6 @@ source $__BASE_DIR__/scripts/bosh-login
 createCloudConfigVarsFile
 updateCloudConfig
 
-# bosh -n update-config --name concourse --type cloud $__BASE_DIR__/cloud-configs/vm-extenions-config.yml -v ns_group_name="${CONCOURSE_NS_GROUP_NAME}"
-
 ## Check to see if the concourse-bosh-deployment folder exists, if not then clone it, else pull the latest code
 if [ ! -d "$__BASE_DIR__/concourse-bosh-deployment" ]; then
   git clone https://github.com/concourse/concourse-bosh-deployment $__BASE_DIR__/concourse-bosh-deployment
@@ -117,7 +115,6 @@ bosh $DEPLOY_OPTION $__BASE_DIR__/concourse-bosh-deployment/cluster/concourse.ym
   -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/worker-volume-sweeper-max-in-flight.yml \
   -l $__BASE_DIR__/$CONCOURSE_VAR_FILE \
   $HTTP_PROXY_OPS_FILES $HTTP_PROXY_VARS $BBR_OPS_FILES $BBR_VARS $SKIP_MTLS_OPS_FILES
-  # -o $__BASE_DIR__/ops-files/vm-extensions.yml \
 
 ##### CONCOURSE DEPLOYMENT END #####
 

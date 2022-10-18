@@ -1,6 +1,0 @@
-- type: replace
-  path: /instance_groups/name=db/jobs/name=postgres/properties/databases/tls?
-  value:
-    ca: ((atc_tls.ca))
-    certificate: ((atc_tls.certificate))
-    private_key: ((atc_tls.private_key))
