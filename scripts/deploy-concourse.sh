@@ -95,7 +95,6 @@ bosh $DEPLOY_OPTION $__BASE_DIR__/concourse-bosh-deployment/cluster/concourse.ym
   -d concourse \
   $CONCOURSE_VERSIONS_TO_DEPLOY \
   -o $__BASE_DIR__/ops-files/nws-azs.yml \
-  -o $__BASE_DIR__/ops-files/stemcell.yml \
   -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/basic-auth.yml \
   -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/github-auth.yml \
   -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/credhub-path-prefix.yml \
