@@ -74,7 +74,8 @@ BBR_VARS=" "
 if [[ "$CONCOURSE_BACKUPS_REQUIRED" == "true" ]]; then
   uploadRelease "backup-and-restore-sdk" $BBR_RELEASE_VERSION $BBR_RELEASE_URL
   BBR_OPS_FILES=" -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/backup-atc.yml \
-    -o $__BASE_DIR__/credhub/backup-credhub.yml"
+    -o $__BASE_DIR__/credhub/backup-credhub.yml \
+    -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/secure-internal-postgres-bbr.yml"
 fi
 
 ## If HTTP Proxy is needed include the proxy ops files while deploying bosh
@@ -108,7 +109,6 @@ bosh $DEPLOY_OPTION $__BASE_DIR__/concourse-bosh-deployment/cluster/concourse.ym
   -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/secure-internal-postgres.yml \
   -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/secure-internal-postgres-credhub.yml \
   -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/secure-internal-postgres-uaa.yml \
-  -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/secure-internal-postgres-bbr.yml \
   -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/worker-max-in-flight.yml \
   -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/worker-rebalancing.yml \
   -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/worker-volume-sweeper-max-in-flight.yml \
