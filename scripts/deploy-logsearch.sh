@@ -45,7 +45,7 @@ bosh int logsearch-deployment.yml \
   -v network_name="default" \
   -v uaa_admin_client_secret="ATEa-PMQ4uZ52TnOlQMQhbY9NE3JzSFi" \
   -v cf_admin_password="EKdwIuTl27OnqGcFIICQzRF_S9ljXByY" \
-  -v system_domain="sys.cloudlab.local"
+  -v system_domain="sys.lab.int"
   -o overrides.yml  > logsearch.yml
 
 bosh -d logsearch deploy -n logsearch-deployment.yml \
@@ -76,7 +76,7 @@ bosh -d logsearch deploy -n logsearch-deployment.yml \
   -v network_name="SERVICES" \
   -v uaa_admin_client_secret="EKdwIuTl27OnqGcFIICQzRF_S9ljXByY" \
   -v cf_admin_password="ATEa-PMQ4uZ52TnOlQMQhbY9NE3JzSFi" \
-  -v system_domain="sys.cloudlab.local" \
+  -v system_domain="sys.lab.int" \
   -v cf_deployment_name=cf-5c3e2793d390f4ef95f8 \
   -v api_security_group=default_security_group \
   -o override.yml \
