@@ -73,9 +73,7 @@ BBR_OPS_FILES=" "
 BBR_VARS=" "
 if [[ "$CONCOURSE_BACKUPS_REQUIRED" == "true" ]]; then
   uploadRelease "backup-and-restore-sdk" $BBR_RELEASE_VERSION $BBR_RELEASE_URL $BBR_RELEASE_SHA
-  BBR_OPS_FILES=" -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/backup-atc.yml \
-    -o $__BASE_DIR__/credhub/backup-credhub.yml \
-    -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/secure-internal-postgres-bbr.yml \
+  BBR_OPS_FILES=" -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/secure-internal-postgres-bbr.yml \
     -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/backup-atc-colocated-web.yml"
 fi
 
