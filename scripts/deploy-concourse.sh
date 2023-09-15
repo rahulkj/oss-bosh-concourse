@@ -51,12 +51,12 @@ else
     -v postgres_release_version=\"$POSTGRES_RELEASE_VERSION\" \
     -v bpm_release_version=\"$BPM_RELEASE_VERSION\""
 
-  uploadRelease "concourse" $CONCOURSE_RELEASE_VERSION $CONCOURSE_RELEASE_URL
-  uploadRelease "garden-runc" $GARDEN_RUNC_RELEASE_VERSION $GARDEN_RUNC_RELEASE_URL
-  uploadRelease "postgres" $POSTGRES_RELEASE_VERSION $POSTGRES_RELEASE_URL
-  uploadRelease "bpm" $BPM_RELEASE_VERSION $BPM_RELEASE_URL
-  uploadRelease "uaa" $UAA_RELEASE_VERSION $UAA_RELEASE_URL
-  uploadRelease "credhub" $CREDHUB_RELEASE_VERSION $CREDHUB_RELEASE_URL
+  uploadRelease "concourse" $CONCOURSE_RELEASE_VERSION $CONCOURSE_RELEASE_URL $CONCOURSE_RELEASE_SHA
+  uploadRelease "garden-runc" $GARDEN_RUNC_RELEASE_VERSION $GARDEN_RUNC_RELEASE_URL $GARDEN_RUNC_RELEASE_SHA
+  uploadRelease "postgres" $POSTGRES_RELEASE_VERSION $POSTGRES_RELEASE_URL $POSTGRES_RELEASE_SHA
+  uploadRelease "bpm" $BPM_RELEASE_VERSION $BPM_RELEASE_URL $BPM_RELEASE_SHA
+  uploadRelease "uaa" $UAA_RELEASE_VERSION $UAA_RELEASE_URL $UAA_RELEASE_SHA
+  uploadRelease "credhub" $CREDHUB_RELEASE_VERSION $CREDHUB_RELEASE_URL $CREDHUB_RELEASE_SHA
 fi
 
 ## If HTTP Proxy is needed include the proxy ops files while deploying concourse
@@ -72,7 +72,7 @@ fi
 BBR_OPS_FILES=" "
 BBR_VARS=" "
 if [[ "$CONCOURSE_BACKUPS_REQUIRED" == "true" ]]; then
-  uploadRelease "backup-and-restore-sdk" $BBR_RELEASE_VERSION $BBR_RELEASE_URL
+  uploadRelease "backup-and-restore-sdk" $BBR_RELEASE_VERSION $BBR_RELEASE_URL $BBR_RELEASE_SHA
   BBR_OPS_FILES=" -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/backup-atc.yml \
     -o $__BASE_DIR__/credhub/backup-credhub.yml \
     -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/secure-internal-postgres-bbr.yml"

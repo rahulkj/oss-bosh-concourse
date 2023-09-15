@@ -55,7 +55,14 @@ function uploadRelease() {
     '.Tables[] | .Rows[] | select(.name | contains($release_name)) | select(.version | contains($release_version))')
 
   if [[ -z "$RELEASES_EXISTS" ]]; then
-    bosh -n upload-release $3
+    RELEASE_FILE_NAME=$1-$2.tgz
+    wget $3 -O $RELEASE_FILE_NAME
+    SHA=$(shasum $RELEASE_FILE_NAME | grep $4)
+    if [ ! -z ${SHA} ]; then
+      bosh -n upload-release $RELEASE_FILE_NAME
+    else
+      echo "Downloaded file sha does not match for $1 release"
+    fi
   else
     echo "Latest release is already deployed, so skipping uploading release: $1 with the version: $2"
   fi

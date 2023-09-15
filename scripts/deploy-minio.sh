@@ -15,7 +15,7 @@ export MINIO_RELEASE_VERSION=$version
 export MINIO_RELEASE_SHA=$sha1
 export MINIO_RELEASE_URL=$release_url
 
-uploadRelease "minio" $MINIO_RELEASE_VERSION $MINIO_RELEASE_URL
+uploadRelease "minio" $MINIO_RELEASE_VERSION $MINIO_RELEASE_URL $MINIO_RELEASE_SHA
 
 bosh -n deploy \
   $__BASE_DIR__/minio.yml -d minio \
