@@ -1,16 +1,4 @@
 - type: replace
-  path: /instance_groups/name=web/networks/0/static_ips?
-  value: [((web_static_ips))]
-
-- type: replace
-  path: /instance_groups/name=db/networks/0/static_ips?
-  value: [((concourse_db_ip))]
-
-- type: replace
-  path: /instance_groups/name=worker/networks/0/static_ips?
-  value: [((worker_static_ips))]
-
-- type: replace
   path: /instance_groups/name=web/azs?
   value: [((az_name))]
 

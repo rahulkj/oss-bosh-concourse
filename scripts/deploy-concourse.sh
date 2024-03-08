@@ -102,6 +102,7 @@ bosh $DEPLOY_OPTION $__BASE_DIR__/concourse-bosh-deployment/cluster/concourse.ym
   -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/privileged-https.yml \
   -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/tls.yml \
   -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/tls-vars.yml \
+  -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/static-web.yml \
   -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/uaa.yml \
   -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/credhub-colocated.yml \
   -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/scale.yml \

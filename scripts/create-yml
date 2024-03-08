@@ -60,9 +60,7 @@ function createConcourseDeploymentVarsFile() {
   yq eval -i ".az_name=\"$CONCOURSE_AZ_NAME\"" $__BASE_DIR__/$CONCOURSE_VAR_FILE
   yq eval -i ".network_name=\"$CONCOURSE_NW_NAME\"" $__BASE_DIR__/$CONCOURSE_VAR_FILE
   yq eval -i ".web_network_name=\"$CONCOURSE_NW_NAME\"" $__BASE_DIR__/$CONCOURSE_VAR_FILE
-  yq eval -i ".web_static_ips=\"$CONCOURSE_WEB_STATIC_IPS\"" $__BASE_DIR__/$CONCOURSE_VAR_FILE
-  yq eval -i ".concourse_db_ip=\"$CONCOURSE_DB_STATIC_IPS\"" $__BASE_DIR__/$CONCOURSE_VAR_FILE
-  yq eval -i ".worker_static_ips=\"$CONCOURSE_WORKER_STATIC_IPS\"" $__BASE_DIR__/$CONCOURSE_VAR_FILE
+  yq eval -i ".web_ip=\"$CONCOURSE_WEB_STATIC_IPS\"" $__BASE_DIR__/$CONCOURSE_VAR_FILE
   yq eval -i ".external_host=\"$CONCOURSE_FQDN\"" $__BASE_DIR__/$CONCOURSE_VAR_FILE
   yq eval -i ".external_url=\"$CONCOURSE_EXTERNAL_URL\"" $__BASE_DIR__/$CONCOURSE_VAR_FILE
   yq eval -i ".web_instances=$ATC_WEB_INSTANCES" $__BASE_DIR__/$CONCOURSE_VAR_FILE
