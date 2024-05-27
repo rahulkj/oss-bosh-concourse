@@ -44,6 +44,11 @@ if [[ "$LATEST_RELEASES" == "true" ]]; then
   VERSIONS_FILE=" -o $__BASE_DIR__/misc/bosh-versions.yml"
 fi
 
+NSX_T_OPS_FILE= " "
+if [[ ${NSX_T_ENABLED} ]]; then
+  NSX_T_OPS_FILE=" -o $__BASE_DIR__/misc/nsxt.yml"
+fi
+
 if [[ "${DEBUG}" == "true" ]]; then
   bosh int $__BASE_DIR__/bosh-deployment/bosh.yml \
     --vars-store=$__BASE_DIR__/$BOSH_ALIAS/bosh-vars.yml \
@@ -53,10 +58,9 @@ if [[ "${DEBUG}" == "true" ]]; then
     -o $__BASE_DIR__/bosh-deployment/jumpbox-user.yml \
     -o $__BASE_DIR__/bosh-deployment/uaa.yml \
     -o $__BASE_DIR__/bosh-deployment/credhub.yml \
-    -o $__BASE_DIR__/misc/nsxt.yml \
     -o $__BASE_DIR__/misc/bosh-disk.yml \
     -l $__BASE_DIR__/$BOSH_VAR_FILE \
-    $HTTP_PROXY_OPS_FILES $HTTP_PROXY_VARS $BBR_OPS_FILES $BBR_VARS $VERSIONS_FILE > bosh-int.yml
+    $HTTP_PROXY_OPS_FILES $HTTP_PROXY_VARS $BBR_OPS_FILES $BBR_VARS $VERSIONS_FILE $NSX_T_OPS_FILE > bosh-int.yml
 
   exit 1
 fi
@@ -71,10 +75,9 @@ bosh create-env $__BASE_DIR__/bosh-deployment/bosh.yml \
   -o $__BASE_DIR__/bosh-deployment/jumpbox-user.yml \
   -o $__BASE_DIR__/bosh-deployment/uaa.yml \
   -o $__BASE_DIR__/bosh-deployment/credhub.yml \
-  -o $__BASE_DIR__/misc/nsxt.yml \
   -o $__BASE_DIR__/misc/bosh-disk.yml \
   -l $__BASE_DIR__/$BOSH_VAR_FILE \
-  $HTTP_PROXY_OPS_FILES $HTTP_PROXY_VARS $BBR_OPS_FILES $BBR_VARS $VERSIONS_FILE
+  $HTTP_PROXY_OPS_FILES $HTTP_PROXY_VARS $BBR_OPS_FILES $BBR_VARS $VERSIONS_FILE $NSX_T_OPS_FILE
 
   # -o $__BASE_DIR__/bosh-deployment/syslog.yml \
   # -o $__BASE_DIR__/misc/syslog.yml \
@@ -85,6 +88,6 @@ rm -rf $__BASE_DIR__/$BOSH_VAR_FILE
 ## Login to bosh director for all the operations that are going to be performed later
 source $__BASE_DIR__/scripts/bosh-login
 
-bosh -n update-runtime-config $__BASE_DIR__/bosh-deployment/runtime-configs/dns.yml
+# bosh -n update-runtime-config $__BASE_DIR__/bosh-deployment/runtime-configs/dns.yml
 
 unsetDnsOnWifiAdapter

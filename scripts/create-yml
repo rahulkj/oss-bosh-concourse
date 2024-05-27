@@ -43,11 +43,13 @@ function createBoshDeploymentVarsFile() {
   yq eval -i ".syslog_transport=\"$SYSLOG_TRANSPORT\"" $__BASE_DIR__/$BOSH_VAR_FILE
   yq eval -i ".tsdb_address=\"$TSDB_ADDRESS\"" $__BASE_DIR__/$BOSH_VAR_FILE
   yq eval -i ".tsdb_port=\"$TSDB_PORT\"" $__BASE_DIR__/$BOSH_VAR_FILE
-  yq eval -i ".nsxt_host=\"$NSX_HOST\"" $__BASE_DIR__/$BOSH_VAR_FILE
-  yq eval -i ".nsxt_user=\"$NSX_USERNAME\"" $__BASE_DIR__/$BOSH_VAR_FILE
-  yq eval -i ".nsxt_password=\"$NSX_PASSWORD\"" $__BASE_DIR__/$BOSH_VAR_FILE
-  yq eval -i ".nsxt_ca_cert=\"$(< /tmp/nsx.pem)\"" $__BASE_DIR__/$BOSH_VAR_FILE
   yq eval -i ".bosh_disk_size=$BOSH_DISK_SIZE" $__BASE_DIR__/$BOSH_VAR_FILE
+  if [[ ${NSX_T_ENABLED} ]]; then
+    yq eval -i ".nsxt_host=\"$NSX_HOST\"" $__BASE_DIR__/$BOSH_VAR_FILE
+    yq eval -i ".nsxt_user=\"$NSX_USERNAME\"" $__BASE_DIR__/$BOSH_VAR_FILE
+    yq eval -i ".nsxt_password=\"$NSX_PASSWORD\"" $__BASE_DIR__/$BOSH_VAR_FILE
+    yq eval -i ".nsxt_ca_cert=\"$(< /tmp/nsx.pem)\"" $__BASE_DIR__/$BOSH_VAR_FILE
+  fi
 }
 
 function createConcourseDeploymentVarsFile() {
