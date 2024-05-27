@@ -44,7 +44,7 @@ if [[ "$LATEST_RELEASES" == "true" ]]; then
   VERSIONS_FILE=" -o $__BASE_DIR__/misc/bosh-versions.yml"
 fi
 
-NSX_T_OPS_FILE= " "
+NSX_T_OPS_FILE=" "
 if [[ ${NSX_T_ENABLED} ]]; then
   NSX_T_OPS_FILE=" -o $__BASE_DIR__/misc/nsxt.yml"
 fi
