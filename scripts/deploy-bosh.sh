@@ -45,7 +45,7 @@ if [[ "$LATEST_RELEASES" == "true" ]]; then
 fi
 
 NSX_T_OPS_FILE=" "
-if [[ ${NSX_T_ENABLED} ]]; then
+if [[ "${NSX_T_ENABLED}" == "true" ]]; then
   NSX_T_OPS_FILE=" -o $__BASE_DIR__/misc/nsxt.yml"
 fi
 
