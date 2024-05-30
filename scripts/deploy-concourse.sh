@@ -83,6 +83,15 @@ if [[ "$CONCOURSE_MTLS_REQUIRED" == "false" ]]; then
   SKIP_MTLS_OPS_FILES=" -o $__BASE_DIR__/ops-files/web-skip-mtls.yml"
 fi
 
+INTER_PROCESS_TLS_OPS_FILES=" "
+if [[ "$INTER_PROCESS_TLS" == "true" ]]; then
+  INTER_PROCESS_TLS_OPS_FILES="  -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/secure-internal-postgres.yml \
+  -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/secure-internal-postgres-credhub.yml \
+  -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/secure-internal-postgres-uaa.yml"
+else
+  INTER_PROCESS_TLS_OPS_FILES=" -o $__BASE_DIR__/ops-files/uaa-tls-disable.yml"
+fi
+
 createConcourseDeploymentVarsFile
 
 DEPLOY_OPTION="-n deploy"
@@ -106,14 +115,11 @@ bosh $DEPLOY_OPTION $__BASE_DIR__/concourse-bosh-deployment/cluster/concourse.ym
   -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/uaa.yml \
   -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/credhub-colocated.yml \
   -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/scale.yml \
-  -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/secure-internal-postgres.yml \
-  -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/secure-internal-postgres-credhub.yml \
-  -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/secure-internal-postgres-uaa.yml \
   -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/worker-max-in-flight.yml \
   -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/worker-rebalancing.yml \
   -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/worker-volume-sweeper-max-in-flight.yml \
   -l $__BASE_DIR__/$CONCOURSE_VAR_FILE \
-  $HTTP_PROXY_OPS_FILES $HTTP_PROXY_VARS $BBR_OPS_FILES $BBR_VARS $SKIP_MTLS_OPS_FILES
+  $HTTP_PROXY_OPS_FILES $HTTP_PROXY_VARS $BBR_OPS_FILES $BBR_VARS $SKIP_MTLS_OPS_FILES $INTER_PROCESS_TLS_OPS_FILES
 
 ##### CONCOURSE DEPLOYMENT END #####
 
