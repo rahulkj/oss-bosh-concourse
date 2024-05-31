@@ -73,8 +73,7 @@ BBR_OPS_FILES=" "
 BBR_VARS=" "
 if [[ "$CONCOURSE_BACKUPS_REQUIRED" == "true" ]]; then
   uploadRelease "backup-and-restore-sdk" $BBR_RELEASE_VERSION $BBR_RELEASE_URL $BBR_RELEASE_SHA
-  BBR_OPS_FILES=" -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/secure-internal-postgres-bbr.yml \
-    -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/backup-atc-colocated-web.yml"
+  BBR_OPS_FILES=" -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/backup-atc-colocated-web.yml"
 fi
 
 ## If HTTP Proxy is needed include the proxy ops files while deploying bosh
@@ -87,7 +86,8 @@ INTER_PROCESS_TLS_OPS_FILES=" "
 if [[ "$INTER_PROCESS_TLS" == "true" ]]; then
   INTER_PROCESS_TLS_OPS_FILES="  -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/secure-internal-postgres.yml \
   -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/secure-internal-postgres-credhub.yml \
-  -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/secure-internal-postgres-uaa.yml"
+  -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/secure-internal-postgres-uaa.yml \
+  -o $__BASE_DIR__/concourse-bosh-deployment/cluster/operations/secure-internal-postgres-bbr.yml"
 else
   INTER_PROCESS_TLS_OPS_FILES=" -o $__BASE_DIR__/ops-files/uaa-tls-disable.yml"
 fi
