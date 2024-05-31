@@ -88,6 +88,6 @@ rm -rf $__BASE_DIR__/$BOSH_VAR_FILE
 ## Login to bosh director for all the operations that are going to be performed later
 source $__BASE_DIR__/scripts/bosh-login
 
-# bosh -n update-runtime-config $__BASE_DIR__/bosh-deployment/runtime-configs/dns.yml
+bosh -n update-runtime-config $__BASE_DIR__/bosh-deployment/runtime-configs/dns.yml
 
 unsetDnsOnWifiAdapter
